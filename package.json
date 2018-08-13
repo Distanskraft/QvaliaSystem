@@ -11,6 +11,7 @@
   "author": "Jonas Olsson",
   "license": "ISC",
   "dependencies": {
+    "asana": "^0.15.1",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "router-express": "^1.5.2"
