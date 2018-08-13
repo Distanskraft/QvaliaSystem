@@ -3,7 +3,7 @@ const router = express.Router();
 const asana = require('asana');
 
 // Import keys
-const keys = require('../config/keys');
+const keys = require('../../config/keys');
 
 // Create Asana Client
 client = asana.Client.create().useAccessToken(keys.distanskraftToken);
