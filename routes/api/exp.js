@@ -15,10 +15,23 @@ client.users.me().then(me => {
 // @desc    Route test function
 // @access  Public
 router.post('/test', (req, res) => {
-  let a = req.body.a;
-  let b = req.body.b;
-  let response = a * b;
-  res.json({ hej: response });
+  console.log(req.body);
+  client.tasks
+    .create({
+      workspace: keys.distanskraftSe,
+      name: req.body.name,
+      projects: req.body.projects,
+      assignee: req.body.assignee
+    })
+    .then(response => {
+      console.log(response.id);
+      client.tasks
+        .addSubtask(response.id, {
+          name: req.body.subtaskname
+        })
+        .then(response => res.json(response));
+    })
+    .catch(error => res.json(error));
 });
 
 module.exports = router;
