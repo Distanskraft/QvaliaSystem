@@ -8,7 +8,7 @@
     "server": "nodemon server.js"
   },
   "keywords": [],
-  "author": "Jonas Olsson",
+  "author": "Qvalia Systems",
   "license": "ISC",
   "dependencies": {
     "asana": "^0.15.1",
