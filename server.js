@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const qvalia = require('./routes/api/qvalia');
+const exp = require('./routes/api/exp');
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.get('/api', (req, res) => {
 
 // Use routes
 app.use('/api/qvalia', qvalia);
+app.use('/api/exp', exp);
 
 const port = process.env.PORT || 5000;
 
