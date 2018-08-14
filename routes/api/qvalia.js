@@ -40,4 +40,12 @@ router.post('/update/task', (req, res) => {
     });
 });
 
+//test
+router.post('/lol', (req, res) => {
+  client.tasks.subtasks(req.body.taskid).then(resp => {
+    console.log(resp);
+    res.json(resp);
+  });
+});
+
 module.exports = router;
