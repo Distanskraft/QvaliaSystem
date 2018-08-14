@@ -6,9 +6,9 @@ const exp = require('./routes/api/exp');
 
 const app = express();
 
-// Bodyparser middleware
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// Body Parser Config for post call
+app.use(bodyParser.json({ limit: '50mb' })); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' })); // support encoded bodies
 
 app.get('/', (req, res) => {
   res.send('index');
