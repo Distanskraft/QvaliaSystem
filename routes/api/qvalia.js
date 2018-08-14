@@ -11,8 +11,8 @@ client.users.me().then(me => {
   console.log(me);
 });
 
-// @route   POST /api/qvalia/test
-// @desc    Route test function
+// @route   POST /api/qvalia/update/task
+// @desc    Update custom fields of tasks
 // @access  Public
 router.post('/update/task', (req, res) => {
   const taskId = req.body.taskId; // send taskId @params
