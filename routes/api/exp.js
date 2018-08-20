@@ -4,7 +4,6 @@ const asana = require('asana');
 
 // Import keys
 const keys = require('../../config/keys');
-
 // Create Asana Client
 client = asana.Client.create().useAccessToken(keys.distanskraftToken);
 client.users.me().then(me => {

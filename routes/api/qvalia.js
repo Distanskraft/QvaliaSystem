@@ -2,27 +2,7 @@ const express = require('express');
 const router = express.Router();
 const asana = require('asana');
 
-/* The functions are better to have in another .js file to make the code cleaner and also 
-   have the possibility to split the functions or code into multiple functions that are
-   easier to maintain, and that have intellisense in the code.
-    
-   The below set's the .js file "myFunctions" as the constant myGodObject.
-  const myGodObject = require('./myFunctions');
-
-  After this is done, the functions can be called by this document by the full path. 
-  myGodObject.asanaTaskFunction.getCustomFieldIdByName
-
-  The other way is to declare the functions one and one and giving them a different name all 
-  together. The below code set's the constant asanaTaskFunction accessable, but the "myOtherObjct"
-  would still not show up in this document because it's not being requested.
-
-  const asanaTaskFunction = require('./myFunctions').asanaTaskFunction;
-
-  The last, and cleanest way of adding multiple .js functions from another document is a new way
-  the below line of code loads the asanaTaskFunction from the myFunctions.js and the constant name
-  will be set to "a". Since there is no : after the myOtherObjct so this library will still keep it's
-  original name. This is the cleanest way to add the fucions in my opinion and therefore I will keep it.*/
-
+// This imports the myFunctions libary modules, renames asanaTaskFunction to simply "a" for easier use.
 const { asanaTaskFunction: a, myOtherObjct } = require('./myFunctions');
 
 // Import keys
@@ -70,6 +50,27 @@ router.post('/update/task', (req, res) => {
     });
 });
 
+/*  TEST/TEST1
+  ____   ___  ____ _____ 
+ |  _ \ / _ \/ ___|_   _|
+ | |_) | | | \___ \ | |  
+ |  __/| |_| |___) || |  
+ |_|    \___/|____/ |_|  
+                       
+*/
+// @route   POST /api/qvalia/test/test1
+// @desc    Used for basic testing
+// @access  Public
+router.post('/test/test1', (req, res) => {
+  const taskId = req.body.taskId;
+
+  console.log('Initiating function call for AsanaTaskFunction.getTaskById.');
+  console.log('Requested Task ID:  ', taskId);
+  var task = a.getTaskById(taskId);
+
+  res.json('Hej! Ville du veta nått om task: ' + taskId + '? ');
+});
+
 /*  LOL
   ____   ___  ____ _____ 
  |  _ \ / _ \/ ___|_   _|
@@ -107,7 +108,7 @@ router.post('/lol', (req, res) => {
            to not have to repeat the code up here, and to make the code more redable. 
            The function "getCustomFieldsIdByName" requires a task object (response) 
            and a string to search the custom fields for. 
-           When a match is found the custom_field id is returned to the code. */
+           When a match is found the custom_field id is returned to the code. 
         console.log(
           'Initiating function call to "asanaTaskFunction.getCustomFieldIdByName()".'
         );
@@ -135,6 +136,7 @@ router.post('/lol', (req, res) => {
               a.getCustomFieldIdByName(subTaskResponse, 'Total Agreed Amount')
             )
         );
+        */
 
         /* Below, the two functions are used combined, the first getting the id of the custom_field
            and the second retrieving the value from the custom field with that custom_field id.*/

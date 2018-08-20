@@ -1,3 +1,24 @@
+/* #region START */
+
+/* #region INIT INITIALIZING */
+
+const express = require('express');
+const router = express.Router();
+const asana = require('asana');
+
+// Import keys
+const keys = require('../../config/keys');
+// Create Asana Client
+
+api = asana.Client.create().useAccessToken(keys.distanskraftToken);
+api.users.me().then(me => {
+  console.log(me);
+});
+
+/* #endregion INIT [optional region name] */
+
+/* #region DOCUMENT_COMMENTS ABOUT THIS DOCUMENT */
+
 /* The is the myFunctions.js file. It's used to easier keep track of the functions used.
 
    The functions are better to have in another .js file to make the code cleaner and also 
@@ -26,11 +47,33 @@
   const { asanaTaskFunction: a, myOtherObjct } = require('./myFunctions');
 */
 
-/* ASANA TASK FUNCTIONS STARTS HERE, THESE SHOULD BE MOVED TO A SEPARATE .JS FILE */
+/* #endregion DOCUMENT_COMMENTS */
+/* #region CONST_COMMENT ABOUT THE COMMENTS CONST */
+/* THE COMMENTS VARIABLE
+   The variable below is used in a 1 or something else fashion. If the value is 1
+   The function code will show console.log() messages from the functions, if however
+   the value is something else the comments will not be shows in the console.
+   */
+/* #endregion CONST_COMMENT*/
+const comments = 1;
+
+/*
+            _____         _   _            _______        _____ _  __  ______ _    _ _   _  _____ _______ _____ ____  _   _ 
+     /\    / ____|  /\   | \ | |   /\     |__   __|/\    / ____| |/ / |  ____| |  | | \ | |/ ____|__   __|_   _/ __ \| \ | |
+    /  \  | (___   /  \  |  \| |  /  \       | |  /  \  | (___ | ' /  | |__  | |  | |  \| | |       | |    | || |  | |  \| |
+   / /\ \  \___ \ / /\ \ | . ` | / /\ \      | | / /\ \  \___ \|  <   |  __| | |  | | . ` | |       | |    | || |  | | . ` |
+  / ____ \ ____) / ____ \| |\  |/ ____ \     | |/ ____ \ ____) | . \  | |    | |__| | |\  | |____   | |   _| || |__| | |\  |
+ /_/    \_\_____/_/    \_\_| \_/_/    \_\    |_/_/    \_\_____/|_|\_\ |_|     \____/|_| \_|\_____|  |_|  |_____\____/|_| \_|
+
+  */
+
+/* #endregion START */
 var asanaTaskFunction = {
   // This is just some test memory storage that I'm trying out, testValue and created_by.
   testValue: 'crap',
   created_by: 'Magnus is king ',
+
+  /* #region FUNCTION: getCustomFieldIdByName */
 
   /*  
   _____ _   _ _   _  ____ _____ ___ ___  _   _ 
@@ -47,13 +90,16 @@ var asanaTaskFunction = {
     is returned to the code.
  */
   getCustomFieldIdByName: function(task, customFieldName) {
-    console.log('asanaTaskFunction.GetCustomFieldIdByName: task: ' + task.id);
-    console.log(
-      'asanaTaskFunction.GetCustomFieldIdByName: customFieldName: ' +
-        customFieldName
-    );
-
-    //console.log('task.custom_fields.length: ' + task.custom_fields.length);
+    if (comments == 1) {
+      console.log('asanaTaskFunction.GetCustomFieldIdByName: task: ' + task.id);
+      console.log(
+        'asanaTaskFunction.GetCustomFieldIdByName: customFieldName: ' +
+          customFieldName
+      );
+    }
+    if (comments == 1) {
+      console.log('task.custom_fields.length: ' + task.custom_fields.length);
+    }
 
     let result = '';
     for (let i = 0; i < task.custom_fields.length; i++) {
@@ -67,6 +113,12 @@ var asanaTaskFunction = {
     return result;
     //return this.id returns the string 'id' created at the top "id: 'id',"
   },
+
+  /* #endregion */
+
+  /* #region FUNCTION: getCustomFieldValueById */
+
+  /* #region FUNCTION: getCustomFieldValueById */
 
   /*  
   _____ _   _ _   _  ____ _____ ___ ___  _   _ 
@@ -88,45 +140,50 @@ var asanaTaskFunction = {
  */
 
   getCustomFieldValueById: function(task, customFieldId) {
-    // Function is not completed. Have to do more testing.
+    /*
     console.log('asanaTaskFunction.GetCustomFieldValueById: task: ' + task.id);
     console.log(
       'asanaTaskFunction.GetCustomFieldValueById: customFieldId: ' +
         customFieldId
     );
+    */
 
     // Loop though all the custom fields
     for (let i = 0; i < task.custom_fields.length; i++) {
-      console.log('Field[' + i + '].id: ' + task.custom_fields[i].id);
-      console.log('Field[' + i + '].name: ' + task.custom_fields[i].name);
-      console.log('Field[' + i + '].type: ' + task.custom_fields[i].type);
+      if (comments == 1) {
+        console.log('Field[' + i + '].id: ' + task.custom_fields[i].id);
+        console.log('Field[' + i + '].name: ' + task.custom_fields[i].name);
+        console.log('Field[' + i + '].type: ' + task.custom_fields[i].type);
+      }
 
       let value = '';
       // If the customFieldId matches the requested fieldID, then return the value.
 
-      // Logging the values that will be usd later down in the if statement.
-      console.log(
-        'AsanaTaskFunction.getCustomFieldValueById: task.custom_fields[' +
-          i +
-          '].id: ' +
-          task.custom_fields[i].id
-      );
-
-      console.log(
-        'AsanaTaskFunction.getCustomFieldValueById: customFieldId: ' +
-          customFieldId
-      );
-
-      if (task.custom_fields[i].id === customFieldId) {
-        console.log('The comparison value in the if statement was true.');
-
+      if (comments == 1) {
+        // Logging the values that will be usd later down in the if statement.
         console.log(
           'AsanaTaskFunction.getCustomFieldValueById: task.custom_fields[' +
             i +
-            '].type: ' +
-            task.custom_fields[i].type
+            '].id: ' +
+            task.custom_fields[i].id
         );
 
+        console.log(
+          'AsanaTaskFunction.getCustomFieldValueById: customFieldId: ' +
+            customFieldId
+        );
+      }
+
+      if (task.custom_fields[i].id === customFieldId) {
+        if (comments == 1) {
+          console.log('The comparison value in the if statement was true.');
+          console.log(
+            'AsanaTaskFunction.getCustomFieldValueById: task.custom_fields[' +
+              i +
+              '].type: ' +
+              task.custom_fields[i].type
+          );
+        }
         if (task.custom_fields[i].type === 'number') {
           return task.custom_fields[i].number_value;
         } else if (task.custom_fields[i].type === 'text') {
@@ -141,8 +198,66 @@ var asanaTaskFunction = {
     }
 
     //return this.id returns the string 'id' created at the top "id: 'id',"
-  }
+  },
+
+  /* #endregion */
+
+  /*  
+  _____ _   _ _   _  ____ _____ ___ ___  _   _ 
+ |  ___| | | | \ | |/ ___|_   _|_ _/ _ \| \ | |
+ | |_  | | | |  \| | |     | |  | | | | |  \| |
+ |  _| | |_| | |\  | |___  | |  | | |_| | |\  |
+ |_|    \___/|_| \_|\____| |_| |___\___/|_| \_|
+
+  GET TASK BY ID
+  The getFunctionById is still under development.
+  */
+
+  getTaskById: function(taskID) {
+    const taskId = taskID;
+    console.log('Task ID from within the function: ', taskId);
+
+    router.post('/', (req, res) => {
+      const taskId = req.body.taskId; // send taskId @params
+      const customFields = req.body.customFields; // Send customFields[@fieldId] @value
+      // Log field Value
+      console.log(customFields);
+
+      // Update asana task with custom field.
+      client.tasks
+        .update(taskId, {
+          custom_fields: customFields
+        })
+
+        // Define Response in function.. This is a promise returned from Asana API
+        .then(response => {
+          //Send the response back in a json. This is already in json format from the asana api
+          res.json(response);
+          return response.json;
+        })
+        .catch(err => {
+          //IF Error, catch the error and log to console.
+          console.log(err);
+
+          //Return also the error back to the sender.
+          res.json(err);
+          return err.json;
+        });
+    });
+  },
+  this_dummy_new_function: function(task, taskID) {},
+  this_dummy_new_function2: function(task, taskID) {}
 };
+
+/*
+  __  ____     __   ____ _______ _    _ ______ _____     ____  ____       _ ______ _____ _______ 
+ |  \/  \ \   / /  / __ \__   __| |  | |  ____|  __ \   / __ \|  _ \     | |  ____/ ____|__   __|
+ | \  / |\ \_/ /  | |  | | | |  | |__| | |__  | |__) | | |  | | |_) |    | | |__ | |       | |   
+ | |\/| | \   /   | |  | | | |  |  __  |  __| |  _  /  | |  | |  _ < _   | |  __|| |       | |   
+ | |  | |  | |    | |__| | | |  | |  | | |____| | \ \  | |__| | |_) | |__| | |___| |____   | |   
+ |_|  |_|  |_|     \____/  |_|  |_|  |_|______|_|  \_\  \____/|____/ \____/|______\_____|  |_|   
+                                                                                                 
+*/
 
 const myOtherObjct = {
   sayHi: function() {
