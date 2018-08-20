@@ -1,3 +1,4 @@
+/* #region INIT */
 const express = require('express');
 const router = express.Router();
 const asana = require('asana');
@@ -13,6 +14,8 @@ client.users.me().then(me => {
   console.log(me);
 });
 
+/* #endregion INIT */
+/* #region POST_UPDATE_TASK - UPDATE TASK */
 /*  TASK/UPDATE
   ____   ___  ____ _____ 
  |  _ \ / _ \/ ___|_   _|
@@ -50,6 +53,31 @@ router.post('/update/task', (req, res) => {
     });
 });
 
+/* #endregion POST_UPDATE_TASK */
+
+/* #region POST_WEBHOOK_TEST1 - WEBHOOK/TEST1 */
+/*  WEBHOOK/TEST1
+  ____   ___  ____ _____ 
+ |  _ \ / _ \/ ___|_   _|
+ | |_) | | | \___ \ | |  
+ |  __/| |_| |___) || |  
+ |_|    \___/|____/ |_|  
+                       
+*/
+// @route   POST /api/qvalia/webhook/test1
+// @desc    Update custom fields of tasks
+// @access  Public
+router.post('/webhooks/test1', (req, res) => {
+  const taskId = req.body.taskId; // send taskId @params
+
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Hello workd\n');
+});
+
+/* #endregion POST_WEBHOOK_TEST1 */
+
+/* #region POST_TEST_TEST1 POST TEST1*/
+
 /*  TEST/TEST1
   ____   ___  ____ _____ 
  |  _ \ / _ \/ ___|_   _|
@@ -71,6 +99,9 @@ router.post('/test/test1', (req, res) => {
   res.json('Hej! Ville du veta nått om task: ' + taskId + '? ');
 });
 
+/* #endregion POST_TEST_TEST1 POST TEST1*/
+
+/* #region POST_LOL POST LOL */
 /*  LOL
   ____   ___  ____ _____ 
  |  _ \ / _ \/ ___|_   _|
@@ -154,5 +185,7 @@ router.post('/lol', (req, res) => {
     }
   });
 });
+
+/* #endregion POST_LOL POST LOL */
 
 module.exports = router;
