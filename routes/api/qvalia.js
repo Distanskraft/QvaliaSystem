@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const asana = require('asana');
 
+// Server URL:  https://qvaliasystem.herokuapp.com/api/qvalia/webhooks/COMMAND_783353782030230 */
+
 // This imports the myFunctions libary modules, renames asanaTaskFunction to simply "a" for easier use.
 const { asanaTaskFunction: a, myOtherObjct } = require('./myFunctions');
 
@@ -67,11 +69,11 @@ router.post('/update/task', (req, res) => {
 // @route   POST /api/qvalia/webhook/test1
 // @desc    Update custom fields of tasks
 // @access  Public
-router.post('/webhooks/test1', (req, res) => {
+router.post('/webhooks/COMMAND_783353782030230', (req, res) => {
   const taskId = req.body.taskId; // send taskId @params
 
   res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Hello workd\n');
+  res.end('Hello world!\n');
 });
 
 /* #endregion POST_WEBHOOK_TEST1 */
