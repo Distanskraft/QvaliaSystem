@@ -69,11 +69,11 @@ router.post('/update/task', (req, res) => {
 // @route   POST /api/qvalia/webhook/test1
 // @desc    Update custom fields of tasks
 // @access  Public
-router.post('/webhooks/COMMAND_783353782030230', (req, res) => {
+router.post('/Webhooks/UpdateAccountName', (req, res) => {
   const taskId = req.body.taskId; // send taskId @params
 
   res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Hello world!\n');
+  res.end('Hello! Im going fo fix task: ' + taskId + '!\n');
 });
 
 /* #endregion POST_WEBHOOK_TEST1 */
@@ -98,7 +98,7 @@ router.post('/test/test1', (req, res) => {
   console.log('Requested Task ID:  ', taskId);
   var task = a.getTaskById(taskId);
 
-  res.json('Hej! Ville du veta nått om task: ' + taskId + '? ');
+  res.json('Hej! Ville du veta nått om task: ' + taskId + '?');
 });
 
 /* #endregion POST_TEST_TEST1 POST TEST1*/
