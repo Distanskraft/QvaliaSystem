@@ -282,7 +282,34 @@ var asanaTaskFunction = {
       .catch(err => err);
   },
   */
-  this_dummy_new_function: function(task, taskID) {},
+  UpdateAccountName: function(taskId) {
+    let customFields =
+      '{ "custom_fields": [ ' +
+      '    { "id": 769000309978435, ' +
+      ' "text_value": "Test", ' +
+      '    } ' +
+      ' ]}';
+
+    // Update asana task with custom field.
+    client.tasks
+      .update(taskId, {
+        custom_fields: customFields
+      })
+
+      // Define Response in function.. This is a promise returned from Asana API
+      .then(response => {
+        //Send the response back in a json. This is already in json format from the asana api
+        res.json(response);
+      })
+      .catch(err => {
+        //IF Error, catch the error and log to console.
+        console.log(err);
+
+        //Return also the error back to the sender.
+        res.json(err);
+      });
+    return 'Done!';
+  },
   this_dummy_new_function2: function(task, taskID) {}
 };
 

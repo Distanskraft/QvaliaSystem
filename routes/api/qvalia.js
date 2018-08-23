@@ -141,7 +141,7 @@ router.post('/update/task', (req, res) => {
   const taskId = req.body.taskId; // send taskId @params
   const customFields = req.body.customFields; // Send customFields[@fieldId] @value
   // Log field Value
-  console.log(customFields);
+  console.log('CUSTOM FIELDS: ', customFields);
 
   // Update asana task with custom field.
   client.tasks
