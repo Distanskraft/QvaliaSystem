@@ -120,7 +120,7 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                       /\SYSTEM COMMAND to "Update Account Name"\b/i
                     )
                   ) {
-                    runUpdateCustomField(resourceId);
+                    UpdateAccountName(resourceId);
                   } // End of New Assignee else if
                 } // End of Assignee Change Detection
 

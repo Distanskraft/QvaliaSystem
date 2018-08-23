@@ -10,7 +10,10 @@ const keys = require('./config/keys');
 
 // MongoDB Connect
 mongoose
-  .connect(keys.mongodbURI)
+  .connect(
+    keys.mongodbURI,
+    { useNewUrlParser: true }
+  )
   .then(() => console.log('MongoDB Ansluten'))
   .catch(err => console.log(err));
 
