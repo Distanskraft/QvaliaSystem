@@ -2,8 +2,10 @@ const asana = require('asana');
 const request = require('request');
 const pluralize = require('pluralize');
 
+// Get the keys
+const keys = require('../config/keys');
 // Connect to asana
-const client = asana.Client.create().useAccessToken('my_access_token');
+const client = asana.Client.create().useAccessToken(keys.distanskraftToken);
 
 //Function to send post request to webhook -- zapier?
 function onServiceTaskCompletion(projectId, data) {
