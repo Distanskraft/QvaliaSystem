@@ -4,6 +4,12 @@ const pluralize = require('pluralize');
 
 // Get the keys
 const keys = require('../config/keys');
+// Get myfunctions
+const {
+  asanaTaskFunction: a,
+  myOtherObjct
+} = require('../routes/api/myFunctions');
+
 // Connect to asana
 const client = asana.Client.create().useAccessToken(keys.distanskraftToken);
 
@@ -109,8 +115,12 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                 // then call The CatchHook as required.
                 if (_event.type == 'story') {
                   // New Assignee
-                  if (data.text.match(/\bassigned\b/i)) {
-                    onNewAssignee(resourceId, data);
+                  if (
+                    data.text.match(
+                      /\SYSTEM COMMAND to "Update Account Name"\b/i
+                    )
+                  ) {
+                    runUpdateCustomField(resourceId);
                   } // End of New Assignee else if
                 } // End of Assignee Change Detection
 
