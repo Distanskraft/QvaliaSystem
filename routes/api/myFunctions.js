@@ -12,7 +12,7 @@ const keys = require('../../config/keys');
 
 api = asana.Client.create().useAccessToken(keys.distanskraftToken);
 api.users.me().then(me => {
-  console.log(me);
+  console.log(me.name + ' Connected to Asana');
 });
 
 /* #endregion INIT [optional region name] */
