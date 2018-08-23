@@ -47,6 +47,7 @@ function onServiceTaskCreation(projectId, data) {
   );
 }
 
+/*
 //Function to check if the subscription exists at asana
 module.exports.checkAsanaForWebhook = (workspaceId, asanaProjectId) => {
   const target = `https://qvaliasystem.herokuapp.com/api/qvalia/event/webhook/${
@@ -82,6 +83,7 @@ module.exports.checkAsanaForWebhook = (workspaceId, asanaProjectId) => {
       res.json(err.value);
     });
 };
+*/
 
 function subscribeToAsanaWebhooks(eventList, resourceId) {
   console.log(eventList, resourceId);

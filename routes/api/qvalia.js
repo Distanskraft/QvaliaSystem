@@ -42,13 +42,46 @@ client.users.me().then(me => {
 //@ desc   keys: asanaProjectId, workspaceId, projectType
 //@ access Public
 router.post('/subscribe/event', (req, res) => {
+  const checkAsanaForWebhook = (workspaceId, asanaProjectId) => {
+    const target = `https://qvaliasystem.herokuapp.com/api/qvalia/event/webhook/${asanaProjectId}`;
+    client.webhooks
+      .getAll(workspaceId, {
+        resource: asanaProjectId
+      })
+      .then(hooksList => {
+        console.log(hooksList);
+        // Check Asana if Hook Already exist on same target
+        // then return the already existing hook otherwise create new
+        var resource = asanaProjectId;
+
+        var alreadyExistingHook = hooksList.data.find(hook => {
+          return hook.target == target;
+        });
+
+        if (alreadyExistingHook) {
+          //Log
+          console.log(`Hook Already exists for ${resource}:${target}`);
+
+          return alreadyExistingHook;
+        } else {
+          return client.webhooks.create(resource, target);
+        }
+      })
+      .then(hook => {
+        res.json(hook);
+      })
+      .catch(err => {
+        res.json(err.value);
+      });
+  };
+
   //Check in db if hook already exists
   let errors = {};
   Webhook.findOne({ asanaProjectId: req.body.asanaProjectId })
     .then(asanaProjectId => {
       if (asanaProjectId) {
         //Function to check if the subscription exists at asana
-        helper.checkAsanaForWebhook(
+        checkAsanaForWebhook(
           asanaProjectId.workspaceId,
           asanaProjectId.asanaProjectId
         );
