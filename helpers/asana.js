@@ -14,7 +14,7 @@ function onServiceTaskCompletion(projectId, data) {
   };
   request(
     {
-      uri: '<webhook>',
+      uri: 'https://hooks.zapier.com/hooks/catch/2773343/qb3w5x/',
       method: 'POST',
       json: hookData
     },
@@ -35,7 +35,7 @@ function onServiceTaskCreation(projectId, data) {
   };
   request(
     {
-      uri: '<webhook>',
+      uri: 'https://hooks.zapier.com/hooks/catch/2773343/qb3w5x/',
       method: 'POST',
       json: hookData
     },
@@ -49,7 +49,7 @@ function onServiceTaskCreation(projectId, data) {
 
 //Function to check if the subscription exists at asana
 module.exports.checkAsanaForWebhook = (workspaceId, asanaProjectId) => {
-  const target = `https://cm.subflow.se/api/ecokraft/event/webhook/${
+  const target = `https://qvaliasystem.herokuapp.com/api/qvalia/event/webhook/${
     req.body.asanaProjectId
   }`;
   client.webhooks
