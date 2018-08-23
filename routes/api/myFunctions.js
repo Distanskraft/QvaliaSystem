@@ -55,7 +55,7 @@ api.users.me().then(me => {
    the value is something else the comments will not be shows in the console.
    */
 /* #endregion CONST_COMMENT*/
-const comments = 1;
+const comments = 1; //TODO: Build custom console.log function that looks at the COMMENTS var and acts accordingly, like "cl()";
 
 /*
             _____         _   _            _______        _____ _  __  ______ _    _ _   _  _____ _______ _____ ____  _   _ 
@@ -69,9 +69,10 @@ const comments = 1;
 
 /* #endregion START */
 var asanaTaskFunction = {
-  // This is just some test memory storage that I'm trying out, testValue and created_by.
-  testValue: 'crap',
-  created_by: 'Magnus is king ',
+  // This is just some test memory storage that I'm trying out.
+  MotherTaskID: 'N/A',
+  MotherTaskName: 'N/A',
+  MotherTaskCreated_by: 'N/A',
 
   /* #region FUNCTION: getCustomFieldIdByName */
 
@@ -109,9 +110,7 @@ var asanaTaskFunction = {
         result = task.custom_fields[i].id;
       }
     }
-
     return result;
-    //return this.id returns the string 'id' created at the top "id: 'id',"
   },
 
   /* #endregion */
@@ -213,38 +212,76 @@ var asanaTaskFunction = {
   The getFunctionById is still under development.
   */
 
-  getTaskById: function(taskID) {
-    const taskId = taskID;
-    console.log('Task ID from within the function: ', taskId);
-
-    router.post('/', (req, res) => {
-      const taskId = req.body.taskId; // send taskId @params
-      const customFields = req.body.customFields; // Send customFields[@fieldId] @value
-      // Log field Value
-      console.log(customFields);
-
-      // Update asana task with custom field.
-      client.tasks
-        .update(taskId, {
-          custom_fields: customFields
-        })
-
-        // Define Response in function.. This is a promise returned from Asana API
-        .then(response => {
-          //Send the response back in a json. This is already in json format from the asana api
-          res.json(response);
-          return response.json;
-        })
-        .catch(err => {
-          //IF Error, catch the error and log to console.
-          console.log(err);
-
-          //Return also the error back to the sender.
-          res.json(err);
-          return err.json;
-        });
-    });
+  getTaskById: function(taskId) {
+    //console.log('Task ID from within the function: ', taskId);
+    return api.tasks
+      .update(taskId, {})
+      .then(response => {
+        return response;
+      })
+      .catch(err => err);
   },
+  getSubTasks: function(taskId) {
+    //console.log('Task ID from within the function: ', taskId);
+    return api.tasks
+      .subtasks(taskId)
+      .then(response => {
+        let arrSubTaskIds = [];
+        let arrSubTasks = [];
+        for (let i = 0; i < response.data.length; i++) {
+          console.log('ID: ', response.data[i].id);
+          //res.end('RESPONSE DATA LENGTH: ', response.data.length);
+          /*
+          api.tasks
+            .update(response.data[i].id)
+            .then(responseSublevel => arrSubTasks.push(responseSublevel));
+
+          arrSubTaskIds[i] = response.data[i].id;
+          */
+        }
+        return response;
+      })
+      .catch(err => err);
+  },
+
+  updateTaskCustomFields: function(taskId, customFields) {
+    //console.log('Task ID from within the function: ', taskId);
+    return api.tasks
+      .update(taskId, {
+        custom_fields: customFields
+      })
+      .then(response => {
+        res.json(response);
+      })
+      .catch(err => {
+        return res.json(err);
+      });
+  },
+  /*
+  getSubTaskIdsAndExcludeSections: function(taskId) {
+    //console.log('Task ID from within the function: ', taskId);
+    return api.tasks
+      .update(taskId, {})
+      .then(response => {
+        // For every subtask in the main task
+        let arrSubTaskIds = [];
+        let arrSubTasks = [];
+
+        // For all subtasks push the task ID into the array arrSubTasks created above.
+        for (let i = 0; i < response.data.length; i++) {
+          api.tasks
+            .update(response.data[i].id)
+            .then(response => arrSubTasks.push(response));
+          console.log(response);
+
+          arrSubTaskIds[i] = response.data[i].id;
+        }
+
+        return arrSubTaskIds;
+      })
+      .catch(err => err);
+  },
+  */
   this_dummy_new_function: function(task, taskID) {},
   this_dummy_new_function2: function(task, taskID) {}
 };
