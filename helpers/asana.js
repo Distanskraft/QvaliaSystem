@@ -1,3 +1,52 @@
+const asana = require('asana');
+const request = require('request');
+const pluralize = require('pluralize');
+
+// Connect to asana
+const client = asana.Client.create().useAccessToken('my_access_token');
+
+//Function to send post request to webhook -- zapier?
+function onServiceTaskCompletion(projectId, data) {
+  const hookData = {
+    ProjectID: projectId,
+    TaskID: data.target.id,
+    ModifiedAt: data.target.modified_at
+  };
+  request(
+    {
+      uri: '<webhook>',
+      method: 'POST',
+      json: hookData
+    },
+    (error, response, body) => {
+      console.log('error:', error);
+      console.log('statusCode:', response && response.statusCode);
+      console.log('body:', body);
+    }
+  );
+}
+
+//Function to send post request to webhook -- zapier?
+function onServiceTaskCreation(projectId, data) {
+  const hookData = {
+    ProjectID: projectId,
+    TaskID: data.id,
+    ModifiedAt: data.modified_at
+  };
+  request(
+    {
+      uri: '<webhook>',
+      method: 'POST',
+      json: hookData
+    },
+    (error, response, body) => {
+      console.log('error:', error);
+      console.log('statusCode:', response && response.statusCode);
+      console.log('body:', body);
+    }
+  );
+}
+
 //Function to check if the subscription exists at asana
 module.exports.checkAsanaForWebhook = (workspaceId, asanaProjectId) => {
   const target = `https://cm.subflow.se/api/ecokraft/event/webhook/${
@@ -44,7 +93,7 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
         //console.log('hej');
         const pType = WhEvent.projectType || 'UNKNOWN';
 
-        return clientA[pluralize(_event.type)]
+        return client[pluralize(_event.type)]
           .findById(_event.resource, {
             //opt_expand: 'target' & 'text'
           })
@@ -82,9 +131,6 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                   onServiceTaskCreation(resourceId, data);
                 } else {
                   console.log('Här nere id: ' + _event.resource);
-                  // clientA.stories
-                  //   .findById(791351724504405)
-                  //   .then(story => console.log(story));
                 }
 
               default:
