@@ -125,6 +125,26 @@ router.post('/event/webhook/:resourceId', (req, res) => {
 
 /* #endregion WEBHOOKS_START */
 
+/*  #region TEST_TRIGGER */
+
+router.post('/test/trigger', (req, res) => {
+  // res.end(a.UpdateAccountName(req.body.taskId));
+
+  updateTask(req.body.taskId)
+    .then(results => {
+      res.json(results);
+    })
+    .catch(err => console.log(err));
+});
+
+async function updateTask(taskId) {
+  let taskToUpdate = await a.getTaskById(taskId);
+  console.log(taskToUpdate);
+  return await a.getTaskById(taskId);
+}
+
+/* #endregion TEST_TRIGGER */
+
 /* #region POST_UPDATE_TASK - UPDATE TASK */
 /*  TASK/UPDATE
   ____   ___  ____ _____ 

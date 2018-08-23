@@ -17,6 +17,32 @@ api.users.me().then(me => {
 
 /* #endregion INIT [optional region name] */
 
+//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain
+class task {
+  constructor(id) {
+    this.id = id;
+    /*
+    this.created_at = created_at;
+    this.modified_at = modified_at;
+    this.name = name;
+    this.notes = notes;
+    this.assignee = assignee;
+    this.completed = completed;
+    this.assignee_status = assignee_status;
+    this.completed_at = completed_at;
+    this.due_on = due_on;
+    this.due_at = due_at;
+
+    this.custom_fields = [];
+    */
+  }
+  start() {
+    console.log('Starting...');
+  }
+}
+// Prototype functions usable by all tasks here. .HasOwnProperty(id) is true or in prototype returns false.
+task.prototype.showName = function() {};
+
 /* #region DOCUMENT_COMMENTS ABOUT THIS DOCUMENT */
 
 /* The is the myFunctions.js file. It's used to easier keep track of the functions used.
@@ -283,32 +309,35 @@ var asanaTaskFunction = {
   },
   */
   UpdateAccountName: function(taskId) {
-    let customFields =
-      '{ "custom_fields": [ ' +
-      '    { "id": 769000309978435, ' +
-      ' "text_value": "Test", ' +
-      '    } ' +
-      ' ]}';
+    //console.log('HERE IS THE SHIT: ', JSON.stringify(task));
 
+    let updatedTask = new task(taskId);
+
+    updatedTask.start(); //Output: Starting...
+    /* Adding method brake() later to the created object */
+    updatedTask.brake = function() {
+      console.log('Applying Brake...');
+    };
+    updatedTask.brake(); //Output: Applying Brake...
+    console.dir(task);
+    return JSON.stringify(updatedTask);
+    /*
+    let task = new Object();
+    task.id = taskId;
+    task.custom_fields.id = '769000309978435';
+    task.custom_fields.text_value = 'Magnus Östlund';
+*/
+    /*
     // Update asana task with custom field.
     client.tasks
-      .update(taskId, {
-        custom_fields: customFields
-      })
-
-      // Define Response in function.. This is a promise returned from Asana API
+      .update(task)
       .then(response => {
-        //Send the response back in a json. This is already in json format from the asana api
-        res.json(response);
+        return 'WORKED.' + response;
       })
       .catch(err => {
-        //IF Error, catch the error and log to console.
-        console.log(err);
-
-        //Return also the error back to the sender.
-        res.json(err);
+        return 'FAILED. ' + err.json;
       });
-    return 'Done!';
+  */
   },
   this_dummy_new_function2: function(task, taskID) {}
 };
