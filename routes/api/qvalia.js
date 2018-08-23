@@ -3,6 +3,12 @@ const express = require('express');
 const router = express.Router();
 const asana = require('asana');
 
+// Bring in asana helper
+const helper = require('../../helpers/asana');
+
+//Load webhook model
+const Webhook = require('../models/Webhook');
+
 let myTempReply = '';
 // Server URL:  https://qvaliasystem.herokuapp.com/api/qvalia/webhooks/COMMAND_783353782030230 */
 

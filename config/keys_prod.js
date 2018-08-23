@@ -4,5 +4,6 @@ module.exports = {
   analysis: process.env.analysis,
   distanskraftSe: process.env.distanskraftSe,
   PersonalProjectsAdminDistanskraftSe:
-    process.env.PersonalProjectsAdminDistanskraftSe
+    process.env.PersonalProjectsAdminDistanskraftSe,
+  mongodbURI: process.env.mongodbURI
 };

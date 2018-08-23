@@ -1,8 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const qvalia = require('./routes/api/qvalia');
 const exp = require('./routes/api/exp');
+
+// Import keys
+const keys = require('./config/keys');
+
+// MongoDB Connect
+mongoose
+  .connect(keys.mongodbURI)
+  .then(() => console.log('MongoDB Ansluten'))
+  .catch(err => console.log(err));
 
 const app = express();
 
