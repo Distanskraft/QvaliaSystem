@@ -125,22 +125,69 @@ router.post('/event/webhook/:resourceId', (req, res) => {
 
 /* #endregion WEBHOOKS_START */
 
-/*  #region TEST_TRIGGER */
+router.post('/qvalia/test/cfupdate', async (req, res) => {
+  //console.log('taskId: ', req.body.taskId);
+  //console.log('customFieldName: ', req.body.cfName);
+  //console.log('customFieldValue: ', req.body.cfValue);
 
-router.post('/test/trigger', (req, res) => {
-  // res.end(a.UpdateAccountName(req.body.taskId));
-
-  updateTask(req.body.taskId)
-    .then(results => {
-      res.json(results);
-    })
-    .catch(err => console.log(err));
+  const resp = await updateCustomFieldByName(
+    req.body.taskId,
+    req.body.cfName,
+    req.body.cfValue
+  );
+  //console.log('response', resp);
+  res.json(resp);
 });
 
-async function updateTask(taskId) {
-  let taskToUpdate = await a.getTaskById(taskId);
-  console.log(taskToUpdate);
-  return await a.getTaskById(taskId);
+/*  #region TEST_TRIGGER */
+
+router.post('/test/trigger', async (req, res) => {
+  const resp = await updateCustomFieldByName(
+    req.body.taskId,
+    req.body.cfName,
+    req.body.cfValue
+  );
+  //console.log('response', resp);
+  res.json(resp);
+});
+
+async function updateCustomFieldByName(taskId, cfName, cfValue) {
+  // Pull the that that should be updated from Asana.
+  let task = await a.getTaskById(taskId);
+  // TODO: Error handling in case no task if found!
+
+  // Storage for Custom Field Id.
+  let cfId = '';
+
+  // Object used to send the custom fields to Asana
+  let myCustom_field = {};
+
+  // The cfId string will be populated by the loop below.
+  // Loop though all the custom_fields texts and compare
+  // them with the requests target custom_field name.
+  // If a match if found, set the value cfId.
+  for (let i = 0; i < task.custom_fields.length; i++) {
+    // If the requested custom field matches the active one
+    if (cfName === task.custom_fields[i].name) {
+      // Set the cfId value
+      cfId = task.custom_fields[i].id.toString();
+    }
+  }
+
+  // Create an object that can go into the Asana API.
+  myCustom_field[cfId] = cfValue;
+  //console.log('cfId: ', cfId);
+
+  // If no value is found, return error and
+  return client.tasks
+    .update(task.id, {
+      name: task.name,
+      custom_fields: myCustom_field
+    })
+    .then(response => {
+      return response;
+    })
+    .catch(err => console.log(err.value.errors));
 }
 
 /* #endregion TEST_TRIGGER */
@@ -159,9 +206,12 @@ async function updateTask(taskId) {
 // @access  Public
 router.post('/update/task', (req, res) => {
   const taskId = req.body.taskId; // send taskId @params
-  const customFields = req.body.customFields; // Send customFields[@fieldId] @value
+  const customFields = req.body.customFields;
+  // Send customFields[@fieldId] @value
   // Log field Value
-  console.log('CUSTOM FIELDS: ', customFields);
+  // console.log('req.body: ', req.body);
+  // console.log(req);
+  // console.log('req: ', customFields);
 
   // Update asana task with custom field.
   client.tasks

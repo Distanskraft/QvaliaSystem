@@ -19,9 +19,34 @@ api.users.me().then(me => {
 
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain
 class task {
-  constructor(id) {
+  constructor(
+    id,
+    created_at,
+    modified_at,
+    name,
+    notes,
+    assignee,
+    completed,
+    assignee_status,
+    completed_at,
+    due_on,
+    due_at,
+    projects,
+    start_on,
+    tags,
+    workspace,
+    num_hearts,
+    num_likes,
+    parent,
+    hearted,
+    hearts,
+    liked,
+    likes,
+    followers,
+    memberships,
+    custom_fields
+  ) {
     this.id = id;
-    /*
     this.created_at = created_at;
     this.modified_at = modified_at;
     this.name = name;
@@ -32,16 +57,63 @@ class task {
     this.completed_at = completed_at;
     this.due_on = due_on;
     this.due_at = due_at;
-
-    this.custom_fields = [];
-    */
+    this.projects = projects;
+    this.start_on = start_on;
+    this.tags = tags;
+    this.workspace = workspace;
+    this.num_hearts = num_hearts;
+    this.num_likes = num_likes;
+    this.parent = parent;
+    this.hearted = hearted;
+    this.hearts = hearts;
+    this.liked = liked;
+    this.likes = likes;
+    this.followers = followers;
+    this.memberships = memberships;
+    this.custom_fields = custom_fields;
   }
-  start() {
-    console.log('Starting...');
+
+  logTaskId(taskID) {
+    console.log('TASK ID: ', taskID);
   }
 }
 // Prototype functions usable by all tasks here. .HasOwnProperty(id) is true or in prototype returns false.
 task.prototype.showName = function() {};
+
+class projects {
+  constructor(id, name) {
+    this.id = id;
+    this.name = name;
+  }
+}
+
+class workspace {
+  constructor(id, name) {
+    this.id = id;
+    this.name = name;
+  }
+}
+
+class followers {
+  constructor(id, name) {
+    this.id = id;
+    this.name = name;
+  }
+}
+
+//Memberships requires two levels, skipping it for now.
+
+class custom_fields {
+  constructor(id, name, type, value, enabled) {
+    this.id = id;
+    this.name = name;
+    this.type = type;
+    this.value = value;
+    this.enabled = enabled;
+  }
+}
+
+// enum options will also be multi level...
 
 /* #region DOCUMENT_COMMENTS ABOUT THIS DOCUMENT */
 
@@ -181,7 +253,6 @@ var asanaTaskFunction = {
         console.log('Field[' + i + '].type: ' + task.custom_fields[i].type);
       }
 
-      let value = '';
       // If the customFieldId matches the requested fieldID, then return the value.
 
       if (comments == 1) {
@@ -269,7 +340,6 @@ var asanaTaskFunction = {
       })
       .catch(err => err);
   },
-
   updateTaskCustomFields: function(taskId, customFields) {
     //console.log('Task ID from within the function: ', taskId);
     return api.tasks
@@ -283,61 +353,13 @@ var asanaTaskFunction = {
         return res.json(err);
       });
   },
-  /*
-  getSubTaskIdsAndExcludeSections: function(taskId) {
-    //console.log('Task ID from within the function: ', taskId);
+  updateTask: function(taskId, stuff) {
     return api.tasks
-      .update(taskId, {})
-      .then(response => {
-        // For every subtask in the main task
-        let arrSubTaskIds = [];
-        let arrSubTasks = [];
-
-        // For all subtasks push the task ID into the array arrSubTasks created above.
-        for (let i = 0; i < response.data.length; i++) {
-          api.tasks
-            .update(response.data[i].id)
-            .then(response => arrSubTasks.push(response));
-          console.log(response);
-
-          arrSubTaskIds[i] = response.data[i].id;
-        }
-
-        return arrSubTaskIds;
+      .update(taskId, { stuff })
+      .then(results => {
+        return results;
       })
-      .catch(err => err);
-  },
-  */
-  UpdateAccountName: function(taskId) {
-    //console.log('HERE IS THE SHIT: ', JSON.stringify(task));
-
-    let updatedTask = new task(taskId);
-
-    updatedTask.start(); //Output: Starting...
-    /* Adding method brake() later to the created object */
-    updatedTask.brake = function() {
-      console.log('Applying Brake...');
-    };
-    updatedTask.brake(); //Output: Applying Brake...
-    console.dir(task);
-    return JSON.stringify(updatedTask);
-    /*
-    let task = new Object();
-    task.id = taskId;
-    task.custom_fields.id = '769000309978435';
-    task.custom_fields.text_value = 'Magnus Östlund';
-*/
-    /*
-    // Update asana task with custom field.
-    client.tasks
-      .update(task)
-      .then(response => {
-        return 'WORKED.' + response;
-      })
-      .catch(err => {
-        return 'FAILED. ' + err.json;
-      });
-  */
+      .catch(err => console.log(err));
   },
   this_dummy_new_function2: function(task, taskID) {}
 };

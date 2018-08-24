@@ -14,7 +14,7 @@ client.users.me().then(me => {
 // @desc    Route test function
 // @access  Public
 router.post('/test', (req, res) => {
-  console.log(req.body);
+  //console.log(req.body);
   client.tasks
     .create({
       workspace: keys.distanskraftSe,
