@@ -255,6 +255,8 @@ async function updateCustomFieldByName(taskId, cfName, cfValue) {
 
 /* #endregion TASK_updateCustomFieldByName */
 
+/* #region TASK_addTaskToProjectByName */
+
 router.post('/task/addtasktoprojectbyname', async (req, res) => {
   const resp = await addTaskToProjectByName(
     req.body.taskId,
@@ -272,6 +274,7 @@ async function addTaskToProjectByName(taskId, projectName) {
       //console.log(response);
       response.data.forEach(project => {
         if (project.name === projectName) {
+          // TODO: Handle multiple hit issue.
           console.log('Found project, has id: ' + project.id);
           let to = { project: project.id };
           let taskid = taskId;
@@ -287,69 +290,45 @@ async function addTaskToProjectByName(taskId, projectName) {
       });
       //response.data.name.forEach(name => console.log(response.data.name));
     });
-
-  /*
-  return client.projects
-    .findAll({ workspace: 542024449570027 })
-    .then(function(response) {
-      //console.log(response);
-      response.data.forEach(project => {
-        if (project.name === projectName) {
-          console.log('Found project, has id: ' + project.id);
-
-          return client.tasks
-            .addProject(taskId, {
-              projects: '768947507881600'
-            })
-            .then(response => {
-              return response;
-            })
-            .catch(err => console.log(err.value.errors));
-        }
-      });
-      //response.data.name.forEach(name => console.log(response.data.name));
-    });
-    */
-  /*
-  "projects": [
-        {
-            "id": 768947507881600,
-            "name": "1. ACCOUNTS - SE"
-        },
-        {
-            "id": 784098616336416,
-            "name": "1. ACCOUNTS - ALL"
-        }
-    ],
-*/
-
-  /*
-  if (task.toString() != 'Error: Invalid Request') {
-    // Storage for Custom Field Id.
-    let cfId = '';
-
-    // Object used to send the custom fields to the Asana API
-    let myCustom_field = {};
-    cfId = field.id;
-    // Set the custom field object id to the incomming value.
-    myCustom_field[cfId] = cfValue;
-
-    return client.tasks
-      .update(task.id, {
-        name: task.name,
-        projects: myProjects
-      })
-      .then(response => {
-        return response;
-      })
-      .catch(err => console.log(err.value.errors));
-  } else return 'ERROR 1. No Asana task was found with ID: ' + taskId;
-
-
-*/
 }
 
-/* #endregion TASK_updateCustomFieldByName */
+/* #endregion /* #region TASK_addTaskToProjectByName */
+
+/* #region TASK_addTagToTaskByName 
+
+router.post('/task/addtagtotaskbyname', async (req, res) => {
+  const query = req.body.name;
+
+  updateOrCreateTag(query, {
+      workspace: keys.EBBOT_ASANA_WORKSPACE,
+      name: req.body.name,
+      color: req.body.color,
+      notes: req.body.notes || ''
+    })
+    .then(results => res.status(200).json(results))
+    .catch(err => res.json(err.value.errors));
+});
+
+
+async function updateOrCreateTag(query, defaults) {
+  {
+    var queryData = {
+      type: 'tag',
+      query: query,
+      count: 1
+    };
+    return client.workspaces
+      .typeahead(defaults.workspace, queryData)
+      .then(results => {
+        if (results.data[0] && results.data[0].name == query) {
+          return client.tags.update(results.data[0].id, defaults);
+        }
+        return client.tags.create(defaults);
+      });
+}
+
+
+/* #endregion TASK_addTagToTaskByName */
 
 //
 //
