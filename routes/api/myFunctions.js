@@ -87,7 +87,7 @@ class projects {
   }
 }
 
-class workspace {
+class tags {
   constructor(id, name) {
     this.id = id;
     this.name = name;
@@ -101,7 +101,42 @@ class followers {
   }
 }
 
-//Memberships requires two levels, skipping it for now.
+class hearts {
+  constructor(id, name) {
+    this.id = id;
+    this.name = name;
+  }
+}
+
+class likes {
+  constructor(id, name) {
+    this.id = id;
+    this.name = name;
+  }
+}
+// Memeberthips, contains two objects, project and section (OBS not to mix with projectS!)
+class memberships {
+  constructor(project, section) {
+    this.project = project;
+    this.section = section;
+  }
+}
+
+// Membership project
+class project {
+  constructor(id, name) {
+    this.id = id;
+    this.name = name;
+  }
+}
+
+// Membership section
+class section {
+  constructor(id, name) {
+    this.id = id;
+    this.name = name;
+  }
+}
 
 class custom_fields {
   constructor(id, name, type, value, enabled) {
@@ -318,24 +353,50 @@ var asanaTaskFunction = {
       })
       .catch(err => err);
   },
-  getSubTasks: function(taskId) {
+  testTask: function(taskId) {
     //console.log('Task ID from within the function: ', taskId);
     return api.tasks
-      .subtasks(taskId)
+      .update(taskId, {})
       .then(response => {
-        let arrSubTaskIds = [];
-        let arrSubTasks = [];
-        for (let i = 0; i < response.data.length; i++) {
-          console.log('ID: ', response.data[i].id);
-          //res.end('RESPONSE DATA LENGTH: ', response.data.length);
-          /*
-          api.tasks
-            .update(response.data[i].id)
-            .then(responseSublevel => arrSubTasks.push(responseSublevel));
+        // projects, tags, hearts, likes, followers, memberships,
 
-          arrSubTaskIds[i] = response.data[i].id;
-          */
-        }
+        const projects = response.projects.map(
+          projects => new projects(projects.id, projects.name)
+        );
+
+        console.log('CONSOLE LOGGING PROJECTS HERE: ', projects);
+
+        const task = response.fields.map(
+          field =>
+            new task(
+              field.id,
+              field.created_at,
+              field.modified_at,
+              field.name,
+              field.notes,
+              field.assignee,
+              field.completed,
+              field.assignee_status,
+              field.completed_at,
+              field.due_on,
+              field.due_at,
+              projects,
+              field.start_on,
+              field.tags,
+              field.workspace,
+              field.num_hearts,
+              field.num_likes,
+              field.parent,
+              field.hearted,
+              field.hearts,
+              field.liked,
+              field.likes,
+              field.followers,
+              field.memberships,
+              field.custom_fields
+            )
+        );
+
         return response;
       })
       .catch(err => err);
