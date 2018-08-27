@@ -265,7 +265,30 @@ router.post('/task/addtasktoprojectbyname', async (req, res) => {
 });
 
 async function addTaskToProjectByName(taskId, projectName) {
-  // NOT WORKING YET:
+  // Retrieve all projects.
+  return client.projects
+    .findAll({ workspace: 542024449570027 })
+    .then(function(response) {
+      //console.log(response);
+      response.data.forEach(project => {
+        if (project.name === projectName) {
+          console.log('Found project, has id: ' + project.id);
+          let to = { project: project.id };
+          let taskid = taskId;
+          client.tasks
+            .addProject(taskid, to)
+            .then(response => {
+              return response;
+            })
+            .catch(err => {
+              return err;
+            });
+        }
+      });
+      //response.data.name.forEach(name => console.log(response.data.name));
+    });
+
+  /*
   return client.projects
     .findAll({ workspace: 542024449570027 })
     .then(function(response) {
@@ -286,6 +309,7 @@ async function addTaskToProjectByName(taskId, projectName) {
       });
       //response.data.name.forEach(name => console.log(response.data.name));
     });
+    */
   /*
   "projects": [
         {
