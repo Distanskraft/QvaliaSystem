@@ -6,6 +6,9 @@ const asana = require('asana');
 // Bring in asana helper
 const helper = require('../../helpers/asana');
 
+// Email verifyer
+const Verifier = require('email-verifier');
+
 //Load webhook model
 const Webhook = require('../models/Webhook');
 
@@ -141,13 +144,131 @@ router.post('/email/verifyemail', (req, res) => {
     } else {
       res.end('TRUE');
     }
-
     // res.json(data);
     //console.log(data);
-
     //res.data.json;
   });
 });
+//
+//
+//
+//
+//
+//
+//
+//
+
+router.post('/email/verifyemaillog', (req, res) => {
+  var fs = require('fs');
+  var emailTextFile = fs.readFileSync('emails.txt', 'utf8');
+  var emails = emailTextFile.split(';');
+
+  if (fs.existsSync('result.txt')) {
+    fs.unlink('result.txt', err => {
+      if (err) throw err;
+    });
+  }
+
+  let verifier = new Verifier('at_xS9OG0sYnp4ZQ6VloRDXq7Gn2XMDF');
+
+  emails.forEach(email => {
+    verifier.verify(email, (err, data) => {
+      if (err) throw err;
+      //console.log('CHECKING EMAIL ADDRESS: ', email);
+      //console.log(data);
+      //console.log(data.smtpCheck);
+      fs.appendFileSync(
+        'result.txt',
+        email + '; ' + data.smtpCheck + '; \n' + JSON.stringify(data)
+      );
+    });
+  });
+
+  /*
+
+ emails.forEach(email => {
+    console.log(emails[i]);
+    if ((i = 0)) {
+      verifier.verify(emails[i], (err, data) => {
+        if (err) {
+          console.log(err);
+          throw err;
+        }
+
+        //console.log('SMTP CHECK: ', data.smtpCheck);
+        if (data.smtpCheck == 'null' || data.smtpCheck == 'false') {
+          console.log(emails[i] + '; FALSE ');
+          fs.appendFileSync('result.txt', emails[i] + '; FALSE');
+          //console.log('FALSE HERE!');
+        } else {
+          fs.appendFileSync('result.txt', emails[i] + '; TRUE');
+          console.log(emails[i] + '; TRUE ');
+          //fs.appendFileSync('result.txt', emailStatus);
+          //console.log('TRUE HERE');
+        }
+
+        //console.log(data);
+        //fs.appendFileSync('result.txt', data.json + '\n');
+      });
+    }
+  }
+
+*/
+
+  /*
+  verifier.verify(email, (err, data) => {
+    if (err) {
+      console.log(err);
+      throw err;
+    }
+
+    //console.log('SMTP CHECK: ', data.smtpCheck);
+    if (data.smtpCheck == 'null' || data.smtpCheck == 'false') {
+      //console.log('EMAIL; ' + email + '; RESULT; FALSE');
+      return 'FALSE';
+    } else {
+      //console.log('EMAIL; ' + email + '; RESULT; TRUE');
+      return 'TRUE';
+    }
+  });
+*/
+
+  //console.log('EMAIL.TXT : ', email);
+  //fs.appendFileSync('result.txt', emails[0] + ', FALSE');
+  //fs.appendFileSync('result.txt', emails[1] + ', TRUE');
+
+  res.end('Emails where checked and result put in the log.');
+});
+
+async function verifyEmail(email) {
+  //const email = req.body.email;
+  let verifier = new Verifier('at_xS9OG0sYnp4ZQ6VloRDXq7Gn2XMDF');
+
+  verifier.verify(email, (err, data) => {
+    if (err) {
+      console.log(err);
+      throw err;
+    }
+
+    //console.log('SMTP CHECK: ', data.smtpCheck);
+    if (data.smtpCheck == 'null' || data.smtpCheck == 'false') {
+      //console.log('EMAIL; ' + email + '; RESULT; FALSE');
+      return 'FALSE';
+    } else {
+      //console.log('EMAIL; ' + email + '; RESULT; TRUE');
+      return 'TRUE';
+    }
+  });
+}
+
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if (new Date().getTime() - start > milliseconds) {
+      break;
+    }
+  }
+}
 
 /*  #region TASK_updateCustomFieldByName */
 

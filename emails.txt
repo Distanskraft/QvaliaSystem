@@ -1,0 +1,6 @@
+magnus.ostlund@qvalia.com;
+hello.kitty@qvalia.com;
+Hans.Creutzer@qvalia.com;
+magnus.ridderlantz@qvalia.com;
+hello.kitty@safdflkjasdfjasdfasdf.se;
+magnus.kung@qvalia.com
