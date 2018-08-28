@@ -133,8 +133,10 @@ router.post('/email/verifyemail', (req, res) => {
   verifier.verify(email, (err, data) => {
     if (err) throw err;
 
+    console.log(data);
+
     console.log('SMTP CHECK: ', data.smtpCheck);
-    if (data.smtpCheck == 'null') {
+    if (data.smtpCheck == 'null' || data.smtpCheck == 'false') {
       res.end('FALSE');
     } else {
       res.end('TRUE');
