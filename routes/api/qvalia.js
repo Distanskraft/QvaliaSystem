@@ -125,6 +125,19 @@ router.post('/event/webhook/:resourceId', (req, res) => {
 
 /* #endregion WEBHOOKS_START */
 
+router.post('/email/verifyemail', (req, res) => {
+  const Verifier = require('email-verifier');
+  const email = req.body.email;
+  let verifier = new Verifier('at_xS9OG0sYnp4ZQ6VloRDXq7Gn2XMDF');
+
+  verifier.verify(email, (err, data) => {
+    if (err) throw err;
+    res.json(data);
+    console.log(data);
+    //res.data.json;
+  });
+});
+
 /*  #region TASK_updateCustomFieldByName */
 
 router.post('/task/updateCustomFieldByName', async (req, res) => {
@@ -294,21 +307,20 @@ async function addTaskToProjectByName(taskId, projectName) {
 
 /* #endregion /* #region TASK_addTaskToProjectByName */
 
-/* #region TASK_addTagToTaskByName 
+/* #region TASK_addTagToTaskByName */
 
 router.post('/task/addtagtotaskbyname', async (req, res) => {
   const query = req.body.name;
 
   updateOrCreateTag(query, {
-      workspace: keys.EBBOT_ASANA_WORKSPACE,
-      name: req.body.name,
-      color: req.body.color,
-      notes: req.body.notes || ''
-    })
+    workspace: keys.distanskraftSe,
+    name: req.body.name,
+    color: req.body.color,
+    notes: req.body.notes || ''
+  })
     .then(results => res.status(200).json(results))
     .catch(err => res.json(err.value.errors));
 });
-
 
 async function updateOrCreateTag(query, defaults) {
   {
@@ -325,8 +337,8 @@ async function updateOrCreateTag(query, defaults) {
         }
         return client.tags.create(defaults);
       });
+  }
 }
-
 
 /* #endregion TASK_addTagToTaskByName */
 
