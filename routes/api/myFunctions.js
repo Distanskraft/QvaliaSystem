@@ -401,6 +401,7 @@ var asanaTaskFunction = {
       })
       .catch(err => err);
   },
+
   updateTaskCustomFields: function(taskId, customFields) {
     //console.log('Task ID from within the function: ', taskId);
     return api.tasks

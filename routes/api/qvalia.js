@@ -151,124 +151,190 @@ router.post('/email/verifyemail', (req, res) => {
 });
 //
 //
-//
-//
-//
-//
-//
-//
 
-router.post('/email/verifyemaillog', (req, res) => {
-  var fs = require('fs');
-  var emailTextFile = fs.readFileSync('emails.txt', 'utf8');
-  var emails = emailTextFile.split(';');
+/*  #region TASK_updateAccount */
 
-  if (fs.existsSync('result.txt')) {
-    fs.unlink('result.txt', err => {
-      if (err) throw err;
-    });
-  }
+router.post('/task/updateAccountName', (req, res) => {
+  // Array that will be used to loop though all the tasks, and
+  // set the field Account Name to the correct name.
 
-  let verifier = new Verifier('at_xS9OG0sYnp4ZQ6VloRDXq7Gn2XMDF');
-
-  emails.forEach(email => {
-    verifier.verify(email, (err, data) => {
-      if (err) throw err;
-      //console.log('CHECKING EMAIL ADDRESS: ', email);
-      //console.log(data);
-      //console.log(data.smtpCheck);
-      fs.appendFileSync(
-        'result.txt',
-        email + '; ' + data.smtpCheck + '; \n' + JSON.stringify(data)
-      );
-    });
-  });
-
-  /*
-
- emails.forEach(email => {
-    console.log(emails[i]);
-    if ((i = 0)) {
-      verifier.verify(emails[i], (err, data) => {
-        if (err) {
-          console.log(err);
-          throw err;
-        }
-
-        //console.log('SMTP CHECK: ', data.smtpCheck);
-        if (data.smtpCheck == 'null' || data.smtpCheck == 'false') {
-          console.log(emails[i] + '; FALSE ');
-          fs.appendFileSync('result.txt', emails[i] + '; FALSE');
-          //console.log('FALSE HERE!');
-        } else {
-          fs.appendFileSync('result.txt', emails[i] + '; TRUE');
-          console.log(emails[i] + '; TRUE ');
-          //fs.appendFileSync('result.txt', emailStatus);
-          //console.log('TRUE HERE');
-        }
-
-        //console.log(data);
-        //fs.appendFileSync('result.txt', data.json + '\n');
-      });
-    }
-  }
-
-*/
-
-  /*
-  verifier.verify(email, (err, data) => {
-    if (err) {
+  client.tasks
+    .subtasks(req.body.taskId)
+    .then(response => {
+      return response;
+    })
+    .catch(err => {
       console.log(err);
-      throw err;
-    }
+      return err;
+    });
 
-    //console.log('SMTP CHECK: ', data.smtpCheck);
-    if (data.smtpCheck == 'null' || data.smtpCheck == 'false') {
-      //console.log('EMAIL; ' + email + '; RESULT; FALSE');
-      return 'FALSE';
-    } else {
-      //console.log('EMAIL; ' + email + '; RESULT; TRUE');
-      return 'TRUE';
-    }
-  });
+  res.json(response);
+  //res.json(subtasks);
+
+  /*
+  let arrTaskIds = [];
+  let arrTemp = [];
+
+  // Get the account = requested task.
+  client.tasks
+    .update(req.body.taskId, { id: req.body.taskId })
+    .then(response => {
+      arrTaskIds.push(response.id);
+      // The temp array will be used in order to compare if there where any new
+      // task id's added to the array.
+      arrTemp = arrTaskIds;
+      let NumberOfUniqueTaskIdsAtStart = 0;
+      let NumberOfUniqueTaskIdsAtFinish = 0;
+
+      // The below loop executes once, then tests the condition if its true.
+      do {
+        NumberOfUniqueTaskIdsAtStart = arrTaskIds.length;
+        console.log('Number of tasks at start:', NumberOfUniqueTaskIdsAtStart);
+        console.log('arrTaskIds before: ', arrTaskIds.length);
+        console.log(arrTemp);
+        let i = 0;
+        for (i = 0; i < arrTaskIds.length; i++);
+        {
+          console.log('Working on id: ', arrTaskIds[i]);
+
+          getSubTaskIds(arrTaskIds[i])
+            .then(result => {
+              arrTemp.push(result);
+              console.log('ArrTemp: ', arrTemp);
+              // Add the id's to the arrTemp array which is the container for all
+              // new tasks.
+              arrTemp.push(myTemp);
+              // Push all new found id's to the storage array
+              arrTaskIds.push(arrTemp);
+              console.log('arrTaskIds after: ', arrTaskIds.length);
+              return arrTaskIds;
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        }
+
+        //Remove any duplicates.
+        console.log('Array before unique: ', arrTaskIds);
+        arrTaskIds = arrTaskIds.unique();
+        console.log('Array after unique: ', arrTaskIds);
+
+        NumberOfUniqueTaskIdsAtFinish = arrTaskIds.length;
+        console.log(
+          'Number of tasks at finish:',
+          NumberOfUniqueTaskIdsAtFinish
+        );
+      } while (arrTaskIds.length < 0);
+
+      return response;
+    })
+    .catch(err => {
+      console.log(err);
+      return err;
+    });
+
+  // NumberOfUniqueTaskIdsAtStart < NumberOfUniqueTaskIdsAtFinish
+  res.json(arrTaskIds);
 */
+  //
+  //
+  //
+  //
+  //
+  //
+  //
 
-  //console.log('EMAIL.TXT : ', email);
-  //fs.appendFileSync('result.txt', emails[0] + ', FALSE');
-  //fs.appendFileSync('result.txt', emails[1] + ', TRUE');
+  /*
 
-  res.end('Emails where checked and result put in the log.');
+  // Add the Account Task Id to the array
+  arrTaskIds.push(Account.id);
+  // Get all the subtasks for the account.
+  let AccountSubTasks = await client.tasks
+    .subtasks(Account.id)
+    .then(response => {
+      return response;
+    })
+    .catch(err => {
+      console.log(err);
+      return err;
+    });
+
+  // Loop though all the subtasks
+  for (i = 0; i < AccountSubTasks.data.length; i++) {
+    // For each found subtask, create thisSubTask object to pull the id from.
+    let thisTask = AccountSubTasks.data[i];
+    // Push the id to the arrTaskIds.
+    arrTaskIds.push(thisTask.id);
+  }
+
+  let arrTemp = arrTaskIds.unique();
+  arrTaskIds = arrTemp;
+
+  //let duplicates = [1,3,4,2,1,2,3,8];
+  let uniques = duplicates.unique(); // result = [1,3,4,2,8]
+
+
+  //console.log(AccountSubTasks.data.id.length);
+
+  console.log(arrTaskIds);
+
+  res.json(AccountSubTasks);
+    */
 });
 
-async function verifyEmail(email) {
-  //const email = req.body.email;
-  let verifier = new Verifier('at_xS9OG0sYnp4ZQ6VloRDXq7Gn2XMDF');
+async function getSubTaskIds(taskId) {
+  let arrResponse = [];
 
-  verifier.verify(email, (err, data) => {
-    if (err) {
+  // Get all the subtasks for the account.
+  let subTasks = await client.tasks
+    .subtasks(taskId)
+    .then(response => {
+      return response;
+    })
+    .catch(err => {
       console.log(err);
-      throw err;
-    }
+      return err;
+    });
 
-    //console.log('SMTP CHECK: ', data.smtpCheck);
-    if (data.smtpCheck == 'null' || data.smtpCheck == 'false') {
-      //console.log('EMAIL; ' + email + '; RESULT; FALSE');
-      return 'FALSE';
-    } else {
-      //console.log('EMAIL; ' + email + '; RESULT; TRUE');
-      return 'TRUE';
-    }
-  });
+  // Loop though all the subtasks
+  for (i = 0; i < subTasks.data.length; i++) {
+    // For each found subtask, create thisSubTask object to pull the id from.
+    let thisTask = subTasks.data[i];
+    // Push the id to the response array.
+    arrResponse.push(thisTask.id);
+  }
+  console.log(arrResponse);
+  return arrResponse;
 }
 
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if (new Date().getTime() - start > milliseconds) {
-      break;
+// Function to get unique values from an array.
+Array.prototype.contains = function(v) {
+  for (var i = 0; i < this.length; i++) {
+    if (this[i] === v) return true;
+  }
+  return false;
+};
+
+Array.prototype.unique = function() {
+  var arr = [];
+  for (var i = 0; i < this.length; i++) {
+    if (!arr.includes(this[i])) {
+      arr.push(this[i]);
     }
   }
-}
+  return arr;
+};
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /*  #region TASK_updateCustomFieldByName */
 

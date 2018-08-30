@@ -113,3 +113,103 @@ async function updateCustomFieldByNameOLD(taskId, cfName, cfValue) {
     })
     .catch(err => console.log(err.value.errors));
 }
+/* #region POST_WEBHOOK_UPDATE_ACCOUNT_NAME - WEBHOOK/UpdateAccountName */
+/*  WEBHOOK/TEST1
+  ____   ___  ____ _____ 
+ |  _ \ / _ \/ ___|_   _|
+ | |_) | | | \___ \ | |  
+ |  __/| |_| |___) || |  
+ |_|    \___/|____/ |_|  
+                       
+*/
+// @route   POST /api/qvalia/webhook/UpdateAccountName
+// @desc    Update custom fields of tasks
+// @access  Public
+router.post('/Webhooks/UpdateAccountName', (req, res) => {
+  const taskId = req.body.taskId; // send taskId @params
+
+  let arrTempTaskHolder = [];
+  let arrTempCustomFieldsHolder = [];
+  myTempReply = [];
+
+  // Get the Mother task
+  client.tasks
+    .update(taskId, {})
+    .then(AsanaResponse => {
+      arrTempTaskHolder.push(AsanaResponse);
+      arrTempCustomFieldsHolder.push(arrTempTaskHolder[0].custom_fields);
+
+      // 1. Find the field that should be updated from it's text.
+      // 2. Update the field value in the main task.
+      // 3. Search the main task for subtasks (multi level loop)
+      // 4. Update the subtasks custom_fields value.
+      // 5. Search the subtasks for lower level subtasks (loop)
+      // 6. Update the sublevel subtasks fields.
+      myTempReply = myTempReply + 'REPLY FROM QVALIA API: \n';
+
+      myTempReply =
+        myTempReply + 'New Account Name: "' + arrTempTaskHolder[0].name + '"\n';
+
+      myTempReply =
+        myTempReply +
+        'custom_fields[0].Id:  "' +
+        arrTempTaskHolder[0].custom_fields[0].id +
+        '"\n';
+
+      myTempReply =
+        myTempReply +
+        'CUSTOM FIELD "ACCOUNT NAME CUSTOM FIELD VALUE: ": ' +
+        a.getCustomFieldValueById(
+          AsanaResponse,
+          a.getCustomFieldIdByName(AsanaResponse, 'Account Name')
+        );
+
+      // SEND THE REPLY TO POSTMAN! WORKS!
+      res.end(myTempReply);
+
+      //a.getCustomFieldIdByName('Account Name')
+
+      //res.json(AsanaResponse);
+    })
+    .catch(err => {
+      //IF Error, catch the error and log to console.
+      console.log(err);
+
+      //Return also the error back to the sender.
+      res.json(err);
+    });
+
+  // res.writeHead(200, { 'Content-Type': 'text/plain' });
+  // res.end('Hello! Im going fo fix task: ' + taskId + '!\n');
+});
+
+/* #endregion POST_WEBHOOK_UPDATE_ACCOUNT_NAME */
+
+router.post('/email/verifyemaillog', (req, res) => {
+  var fs = require('fs');
+  var emailTextFile = fs.readFileSync('emails.txt', 'utf8');
+  var emails = emailTextFile.split(';');
+
+  if (fs.existsSync('result.txt')) {
+    fs.unlink('result.txt', err => {
+      if (err) throw err;
+    });
+  }
+
+  let verifier = new Verifier('at_xS9OG0sYnp4ZQ6VloRDXq7Gn2XMDF');
+
+  emails.forEach(email => {
+    verifier.verify(email, (err, data) => {
+      if (err) throw err;
+      //console.log('CHECKING EMAIL ADDRESS: ', email);
+      //console.log(data);
+      //console.log(data.smtpCheck);
+      fs.appendFileSync(
+        'result.txt',
+        email + '; ' + data.smtpCheck + '; \n' + JSON.stringify(data)
+      );
+    });
+  });
+
+  res.end('Emails where checked and result put in the log.');
+});
