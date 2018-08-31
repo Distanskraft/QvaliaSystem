@@ -116,7 +116,8 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                 if (_event.type == 'story') {
                   // New Assignee
                   if (data.text.match(/\SYSTEM COMMAND to "Action here"\b/i)) {
-                    a.UpdateAccountName(resourceId);
+                    //a.UpdateAccountName(_event.target.id);
+                    console.log('ärendet kom hit id: ' + _event.target.id);
                   } // End of New Assignee else if
                 } // End of Assignee Change Detection
 
