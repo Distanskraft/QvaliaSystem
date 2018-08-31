@@ -249,6 +249,7 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                 } else if (_event.type == 'task') {
                   console.log('made it to MASTER case - TASK');
                   // Check for story text
+                  console.log(_event);
                   if (data.text.match(/SYSTEM COMMAND to "Action here"/i)) {
                     console.log('yes');
                     console.log('DATA: ', data);
