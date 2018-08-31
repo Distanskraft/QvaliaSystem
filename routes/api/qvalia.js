@@ -573,6 +573,7 @@ async function addTaskToProjectByName(taskId, projectName) {
 
 router.post('/task/addtagtotaskbyname', (req, res) => {
   const query = req.body.name;
+  const taskId = req.body.taskId;
 
   helper
     .updateOrCreateTag(query, {
@@ -581,7 +582,12 @@ router.post('/task/addtagtotaskbyname', (req, res) => {
       color: req.body.color,
       notes: req.body.notes || ''
     })
-    .then(results => res.status(200).json(results))
+    .then(results => {
+      client.tasks
+        .addTag(taskId, { tag: results.id })
+        .then(resp => res.status(200).json(resp))
+        .catch(err => res.json(err));
+    })
     .catch(err => res.json(err.value.errors));
 });
 
