@@ -14,7 +14,7 @@ const Verifier = require('email-verifier');
 const Webhook = require('../models/Webhook');
 
 let myTempReply = '';
-// Server URL:  https://qvaliasystem.herokuapp.com/api/qvalia/webhooks/COMMAND_783353782030230 */
+// Server URL:  hehttps://qvaliasystem.herokuapp.com/api/qvalia/webhooks/COMMAND_783353782030230 */
 
 // This imports the myFunctions libary modules, renames asanaTaskFunction to simply "a" for easier use.
 const { asanaTaskFunction: a, myOtherObjct } = require('./myFunctions');
@@ -39,9 +39,22 @@ client.users.me().then(me => {
 
 /* #endregion INIT */
 
+/* #region ROUTER_POST_TEST */
+/* TEST ROUTER.POST */
+router.post('/test', async (req, res) => {
+  req.body.taskId;
+  req.body.cfName;
+  req.body.cfValue;
+
+  helper.updateCustomFieldByName();
+
+  res.json(resp);
+});
+/* #endregion ROUTER_POST_TEST */
+
 /* #region WEBHOOKS_START: */
 
-//@ route  POST api/qvalia/subscribe/event
+//@ route  POST api/ecokraft/subscribe/event
 //@ desc   Route that starts to subscribe on events in an asana project
 //@ desc   keys: asanaProjectId, workspaceId, projectType
 //@ access Public

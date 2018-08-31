@@ -1,3 +1,5 @@
+/* #region INIT Initialized values here.  */
+
 const asana = require('asana');
 const request = require('request');
 const pluralize = require('pluralize');
@@ -12,6 +14,10 @@ const {
 
 // Connect to asana
 const client = asana.Client.create().useAccessToken(keys.distanskraftToken);
+
+/* #endregion INIT */
+
+/* #region LAUNCED_FUNCTIONS */
 
 // UPDATE CUSTOM FIELD BY NAME FUNCTION
 async function updateCustomFieldByName(taskId, cfName, cfValue) {
@@ -228,7 +234,7 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
             // This part will be used to call the Catch Hooks On Zapier
             switch (pType.toUpperCase()) {
               case 'MASTER':
-                if (_event.type == 'story') {
+                if (_event.type == 'story' || _event.type == 'task') {
                   console.log('made it to MASTER case');
                   // Check for story text
                   if (data.text.match(/SYSTEM COMMAND to "Action here"/i)) {
@@ -279,3 +285,7 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
 }
 
 module.exports.subscribeToAsanaWebhooks = subscribeToAsanaWebhooks;
+
+/* #endregion LAUNCED_FUNCTIONS */
+
+module.exports.updateCustomFieldByName = updateCustomFieldByName;
