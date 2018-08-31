@@ -13,21 +13,6 @@ const {
 // Connect to asana
 const client = asana.Client.create().useAccessToken(keys.distanskraftToken);
 
-//JONAS FUNKTION
-const updateTask = taskId => {
-  clientA.tasks
-    .update(taskId, { custom_fields: { '797366123810990': 'snigel' } })
-    .then(response => {
-      // let degreesArr = response.custom_fields.filter(chain => {
-      //   return chain.name === 'Taklutning';
-      // });
-      console.log(response);
-    })
-    .catch(err => {
-      return err;
-    });
-};
-
 // UPDATE CUSTOM FIELD BY NAME FUNCTION
 async function updateCustomFieldByName(taskId, cfName, cfValue) {
   /* Add the below into the router.post section: 
