@@ -136,6 +136,22 @@ async function updateCustomFieldByName(taskId, cfName, cfValue) {
   }
 }
 
+module.exports.updateOrCreateTag = (query, defaults) => {
+  var queryData = {
+    type: 'tag',
+    query: query,
+    count: 1
+  };
+  return client.workspaces
+    .typeahead(defaults.workspace, queryData)
+    .then(results => {
+      if (results.data[0] && results.data[0].name == query) {
+        return client.tags.update(results.data[0].id, defaults);
+      }
+      return client.tags.create(defaults);
+    });
+};
+
 //Function to send post request to webhook -- zapier?
 function onServiceTaskCompletion(projectId, data) {
   const hookData = {
