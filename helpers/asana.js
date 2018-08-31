@@ -234,12 +234,24 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
             // This part will be used to call the Catch Hooks On Zapier
             switch (pType.toUpperCase()) {
               case 'MASTER':
-                if (_event.type == 'story' || _event.type == 'task') {
-                  console.log('made it to MASTER case');
+                if (_event.type == 'story') {
+                  console.log('made it to MASTER case - STORY');
                   // Check for story text
                   if (data.text.match(/SYSTEM COMMAND to "Action here"/i)) {
                     console.log('yes');
                     console.log(data.target.id);
+                    updateCustomFieldByName(
+                      data.target.id,
+                      'Account Name',
+                      'Snigel'
+                    );
+                  }
+                } else if (_event.type == 'task') {
+                  console.log('made it to MASTER case - TASK');
+                  // Check for story text
+                  if (data.text.match(/SYSTEM COMMAND to "Action here"/i)) {
+                    console.log('yes');
+                    console.log('DATA: ', data);
                     updateCustomFieldByName(
                       data.target.id,
                       'Account Name',
