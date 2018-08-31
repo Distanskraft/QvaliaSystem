@@ -231,6 +231,7 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
             opt_expand: 'target'
           })
           .then(data => {
+            console.log('DATA: ', data);
             // This part will be used to call the Catch Hooks On Zapier
             switch (pType.toUpperCase()) {
               case 'MASTER':
