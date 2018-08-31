@@ -155,23 +155,29 @@ router.post('/email/verifyemail', (req, res) => {
 /*  #region TASK_updateAccount */
 
 router.post('/task/updateAccountName', (req, res) => {
+  let arrTaskIds = [];
   // Array that will be used to loop though all the tasks, and
   // set the field Account Name to the correct name.
+  arrTaskIds.push(req.body.taskId);
 
   client.tasks
     .subtasks(req.body.taskId)
     .then(response => {
       return response;
     })
+    .then(response => {
+      res.json(response);
+    })
     .catch(err => {
       console.log(err);
       return err;
+      res.json(err);
     });
+});
 
-  res.json(response);
-  //res.json(subtasks);
+//res.json(subtasks);
 
-  /*
+/*
   let arrTaskIds = [];
   let arrTemp = [];
 
@@ -236,15 +242,15 @@ router.post('/task/updateAccountName', (req, res) => {
   // NumberOfUniqueTaskIdsAtStart < NumberOfUniqueTaskIdsAtFinish
   res.json(arrTaskIds);
 */
-  //
-  //
-  //
-  //
-  //
-  //
-  //
+//
+//
+//
+//
+//
+//
+//
 
-  /*
+/*
 
   // Add the Account Task Id to the array
   arrTaskIds.push(Account.id);
@@ -280,7 +286,6 @@ router.post('/task/updateAccountName', (req, res) => {
 
   res.json(AccountSubTasks);
     */
-});
 
 async function getSubTaskIds(taskId) {
   let arrResponse = [];
