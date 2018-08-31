@@ -248,6 +248,7 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                   // Check for story text
                   if (data.text.match(/SYSTEM COMMAND to "Action here"/i)) {
                     console.log('yes');
+                    console.log(_event.target.id);
                     updateTask(_event.target.id);
                   }
                 }
