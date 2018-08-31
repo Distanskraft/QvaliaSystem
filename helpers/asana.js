@@ -249,7 +249,11 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                   if (data.text.match(/SYSTEM COMMAND to "Action here"/i)) {
                     console.log('yes');
                     console.log(data.target.id);
-                    updateTask(data.target.id);
+                    updateCustomFieldByName(
+                      data.target.id,
+                      'Account Name',
+                      'Snigel'
+                    );
                   }
                 }
                 //
