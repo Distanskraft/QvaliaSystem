@@ -111,18 +111,23 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
             // This part will be used to call the Catch Hooks On Zapier
             switch (pType.toUpperCase()) {
               case 'MASTER':
-                // Logic here to check if event is for updated custom field
-                // then call The CatchHook as required.
                 if (_event.type == 'story') {
-                  // Updated custom field
-                  if (data.text.match(/SYSTEM COMMAND to "Action here"/i)) {
-                    //a.UpdateAccountName(_event.target.id);
-                    console.log('ärendet kom hit id: ' + _event.target.id);
-                  } // End of New Assignee else if
-                } // End of Assignee Change Detection
-
-                break;
-
+                  console.log('made it to MASTER case');
+                  // Check for story text
+                  if (data.text.match(/SYSTEM COMMAND/i)) {
+                    console.log('yes');
+                  } else if (
+                    _event.type == 'story' &&
+                    _event.action == 'added'
+                  ) {
+                    clientA.stories.findById(_event.resource).then(story => {
+                      if (story.text.match(/:love_letter:/i)) {
+                        console.log(story);
+                        onLoveLetter(resourceId, story);
+                      }
+                    });
+                  }
+                }
               case 'CREATEDCOMPLETED':
                 if (_event.type == 'story') {
                   console.log('made it to service case');
