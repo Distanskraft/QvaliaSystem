@@ -232,12 +232,12 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                   console.log('made it to MASTER case');
                   // Check for story text
                   if (data.text.match(/SYSTEM COMMAND to "Action here"/i)) {
+                    console.log('yes');
                     updateCustomFieldByName(
                       _event.target.id,
                       'ID Number',
                       'snigel'
                     );
-                    console.log('yes');
                   }
                 }
                 //
