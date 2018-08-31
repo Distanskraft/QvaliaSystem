@@ -110,16 +110,12 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
           .then(data => {
             // This part will be used to call the Catch Hooks On Zapier
             switch (pType.toUpperCase()) {
-              case 'ASSIGNED':
-                // Logic here to check if event is for new Assignee
+              case 'MASTER':
+                // Logic here to check if event is for updated custom field
                 // then call The CatchHook as required.
                 if (_event.type == 'story') {
                   // New Assignee
-                  if (
-                    data.text.match(
-                      /\SYSTEM COMMAND to "Update Account Name"\b/i
-                    )
-                  ) {
+                  if (data.text.match(/\SYSTEM COMMAND to "Action here"\b/i)) {
                     a.UpdateAccountName(resourceId);
                   } // End of New Assignee else if
                 } // End of Assignee Change Detection

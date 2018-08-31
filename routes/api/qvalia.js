@@ -41,7 +41,7 @@ client.users.me().then(me => {
 
 /* #region WEBHOOKS_START: */
 
-//@ route  POST api/ecokraft/subscribe/event
+//@ route  POST api/qvalia/subscribe/event
 //@ desc   Route that starts to subscribe on events in an asana project
 //@ desc   keys: asanaProjectId, workspaceId, projectType
 //@ access Public
