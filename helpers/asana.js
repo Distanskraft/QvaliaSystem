@@ -116,18 +116,11 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                   // Check for story text
                   if (data.text.match(/SYSTEM COMMAND/i)) {
                     console.log('yes');
-                  } else if (
-                    _event.type == 'story' &&
-                    _event.action == 'added'
-                  ) {
-                    clientA.stories.findById(_event.resource).then(story => {
-                      if (story.text.match(/:love_letter:/i)) {
-                        console.log(story);
-                        onLoveLetter(resourceId, story);
-                      }
-                    });
                   }
                 }
+              //
+              //
+
               case 'CREATEDCOMPLETED':
                 if (_event.type == 'story') {
                   console.log('made it to service case');
