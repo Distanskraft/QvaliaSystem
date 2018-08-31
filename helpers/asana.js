@@ -114,8 +114,8 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                 // Logic here to check if event is for updated custom field
                 // then call The CatchHook as required.
                 if (_event.type == 'story') {
-                  // New Assignee
-                  if (data.text.match(/\SYSTEM COMMAND to "Action here"\b/i)) {
+                  // Updated custom field
+                  if (data.text.match(/SYSTEM COMMAND to "Action here"/i)) {
                     //a.UpdateAccountName(_event.target.id);
                     console.log('ärendet kom hit id: ' + _event.target.id);
                   } // End of New Assignee else if
