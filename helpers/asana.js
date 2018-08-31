@@ -118,8 +118,9 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                     console.log('yes');
                   }
                 }
-              //
-              //
+                //
+                //
+                break;
 
               case 'CREATEDCOMPLETED':
                 if (_event.type == 'story') {
