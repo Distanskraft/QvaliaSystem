@@ -105,7 +105,7 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
 
         return client[pluralize(_event.type)]
           .findById(_event.resource, {
-            //opt_expand: 'target' & 'text'
+            opt_expand: 'target'
           })
           .then(data => {
             // This part will be used to call the Catch Hooks On Zapier
