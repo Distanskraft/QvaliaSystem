@@ -6,8 +6,9 @@ const asana = require('asana');
 // Bring in asana helper
 const helper = require('../../helpers/asana');
 
-// Email verifyer
+/* Email verifyer
 const Verifier = require('email-verifier');
+*/
 
 //Load webhook model
 const Webhook = require('../models/Webhook');
@@ -156,6 +157,7 @@ router.post('/email/verifyemail', (req, res) => {
 
 router.post('/task/updateAccountName', (req, res) => {
   let arrTaskIds = [];
+  let arrTemp = [];
   // Array that will be used to loop though all the tasks, and
   // set the field Account Name to the correct name.
   arrTaskIds.push(req.body.taskId);
@@ -166,6 +168,50 @@ router.post('/task/updateAccountName', (req, res) => {
       return response;
     })
     .then(response => {
+      let i = 0;
+      // The below loop executes once, then tests the condition if its true.
+      do {
+        NumberOfUniqueTaskIdsAtStart = arrTaskIds.length;
+        console.log('Number of tasks at start:', NumberOfUniqueTaskIdsAtStart);
+        console.log('arrTaskIds before: ', arrTaskIds.length);
+        console.log('arrTaskIds values: ', arrTaskIds);
+        console.log(arrTemp);
+
+        /*
+        for ( i < arrTaskIds.length; i++);
+        {
+          console.log('Working on id: ', arrTaskIds[i]);
+
+          getSubTaskIds(arrTaskIds[i])
+            .then(result => {
+              arrTemp.push(result);
+              console.log('ArrTemp: ', arrTemp);
+              // Add the id's to the arrTemp array which is the container for all
+              // new tasks.
+              arrTemp.push(myTemp);
+              // Push all new found id's to the storage array
+              arrTaskIds.push(arrTemp);
+              console.log('arrTaskIds after: ', arrTaskIds.length);
+              return arrTaskIds;
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        }
+        */
+
+        //Remove any duplicates.
+        console.log('Array before unique: ', arrTaskIds);
+        arrTaskIds = arrTaskIds.unique();
+        console.log('Array after unique: ', arrTaskIds);
+
+        NumberOfUniqueTaskIdsAtFinish = arrTaskIds.length;
+        console.log(
+          'Number of tasks at finish:',
+          NumberOfUniqueTaskIdsAtFinish
+        );
+      } while (arrTaskIds.length < 0);
+
       res.json(response);
     })
     .catch(err => {
