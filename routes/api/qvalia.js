@@ -571,7 +571,7 @@ async function addTaskToProjectByName(taskId, projectName) {
 
 /* #region TASK_addTagToTaskByName */
 
-router.post('/task/addtagtotaskbyname', async (req, res) => {
+router.post('/task/addtagtotaskbyname', (req, res) => {
   const query = req.body.name;
 
   updateOrCreateTag(query, {
@@ -584,7 +584,7 @@ router.post('/task/addtagtotaskbyname', async (req, res) => {
     .catch(err => res.json(err.value.errors));
 });
 
-async function updateOrCreateTag(query, defaults) {
+function updateOrCreateTag(query, defaults) {
   {
     var queryData = {
       type: 'tag',
