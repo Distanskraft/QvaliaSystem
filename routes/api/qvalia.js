@@ -633,34 +633,23 @@ async function addTaskToProjectByName(taskId, projectName) {
 
 router.post('/task/addtagtotaskbyname', (req, res) => {
   const query = req.body.name;
+  const taskId = req.body.taskId;
 
-  updateOrCreateTag(query, {
-    workspace: keys.distanskraftSe,
-    name: req.body.name,
-    color: req.body.color,
-    notes: req.body.notes || ''
-  })
-    .then(results => res.status(200).json(results))
+  helper
+    .updateOrCreateTag(query, {
+      workspace: keys.qvaliaCom,
+      name: req.body.name,
+      color: req.body.color,
+      notes: req.body.notes || ''
+    })
+    .then(results => {
+      client.tasks
+        .addTag(taskId, { tag: results.id })
+        .then(resp => res.status(200).json(resp))
+        .catch(err => res.json(err));
+    })
     .catch(err => res.json(err.value.errors));
 });
-
-function updateOrCreateTag(query, defaults) {
-  {
-    var queryData = {
-      type: 'tag',
-      query: query,
-      count: 1
-    };
-    return client.workspaces
-      .typeahead(defaults.workspace, queryData)
-      .then(results => {
-        if (results.data[0] && results.data[0].name == query) {
-          return client.tags.update(results.data[0].id, defaults);
-        }
-        return client.tags.create(defaults);
-      });
-  }
-}
 
 /* #endregion TASK_addTagToTaskByName */
 
