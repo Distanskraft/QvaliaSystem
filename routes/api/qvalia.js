@@ -42,14 +42,74 @@ client.users.me().then(me => {
 /* #region ROUTER_POST_TEST */
 /* TEST ROUTER.POST */
 router.post('/test', async (req, res) => {
-  req.body.taskId;
-  req.body.cfName;
-  req.body.cfValue;
-
-  helper.updateCustomFieldByName();
+  let resp = await addTagToTaskByName(
+    '794639501852805',
+    'Aapo Lappalainen Oy',
+    'ACCOUNT'
+  );
 
   res.json(resp);
 });
+
+function addTagToTaskByName(taskId, TaskName, tagName) {
+  const query = TaskName;
+  return updateOrCreateTag(query, {
+    workspace: keys.distanskraftSe,
+    name: tagName
+  })
+    .then(results => {
+      return api.tasks
+        .update(taskId, { tags: results.id })
+        .then(response => {
+          return response;
+        })
+        .catch(err => err);
+
+      return results;
+    })
+    .catch(err => {
+      return err.value.errors;
+    });
+}
+
+/*
+
+function addTagToTaskByName(TaskName, tagName) {
+  const query = TaskName;
+  return updateOrCreateTag(query, {
+    workspace: keys.distanskraftSe,
+    name: tagName,
+    color: 'dark-green'
+  })
+    .then(results => {
+
+
+      return results;
+    })
+    .catch(err => {
+      return err.value.errors;
+    });
+}
+
+
+
+
+
+  const query = req.body.name;
+
+  updateOrCreateTag(query, {
+    workspace: keys.distanskraftSe,
+    name: req.body.name,
+    color: req.body.color,
+    notes: req.body.notes || ''
+  })
+    .then(results => res.status(200).json(results))
+    .catch(err => res.json(err.value.errors));
+
+*/
+
+// helper.updateCustomFieldByName();
+
 /* #endregion ROUTER_POST_TEST */
 
 /* #region WEBHOOKS_START: */
