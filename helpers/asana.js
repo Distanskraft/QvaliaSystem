@@ -292,12 +292,13 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                       }
                     );
                     console.log('EIV_curr_JSON2: ' + EIV_curr_JSON2);
+
                     let EIV_value = EIV_curr_JSON2[0].name;
                     console.log('EIV_value: ' + EIV_value);
 
                     let logString;
-                    logString = JSON.stringify(data);
-                    logString = JSON.stringify(data, null, 4); // (Optional) beautiful indented output.
+                    logString = JSON.stringify(EIV_value);
+                    logString = JSON.stringify(EIV_value, null, 4); // (Optional) beautiful indented output.
                     console.log('LOGSTRING: ' + logString); // Logs output to dev tools console.
                   }
 
