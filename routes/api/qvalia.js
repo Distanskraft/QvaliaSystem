@@ -39,33 +39,136 @@ client.users.me().then(me => {
 
 /* #endregion INIT */
 
+function sleep(millisecs) {
+  var initiation = new Date().getTime();
+  while (new Date().getTime() - initiation < millisecs);
+}
+
 /* #region ROUTER_POST_TEST */
 /* TEST ROUTER.POST */
-router.post('/test', async (req, res) => {
-  let resp = await addTagToTaskByName(
-    '794639501852805',
-    'Aapo Lappalainen Oy',
-    'ACCOUNT'
-  );
 
-  res.json(resp);
+router.post('/test', async (req, res) => {
+  await addTaskToProjectByName('827583620240329', 'CONTACTS - NO');
+  await addTaskToProjectByName('827586965249753', 'CONTACTS - NO');
+  await addTaskToProjectByName('827586954406401', 'CONTACTS - NO');
+  await addTaskToProjectByName('827586957364175', 'CONTACTS - NO');
+  await addTaskToProjectByName('827586949720179', 'CONTACTS - NO');
+  await addTaskToProjectByName('827586944758942', 'CONTACTS - NO');
+  await addTaskToProjectByName('827586942841650', 'CONTACTS - NO');
+  await addTaskToProjectByName('827585213413190', 'CONTACTS - NO');
+  await addTaskToProjectByName('827583600874853', 'CONTACTS - NO');
+  await addTaskToProjectByName('827586934086320', 'CONTACTS - NO');
+  await addTaskToProjectByName('827586931015608', 'CONTACTS - NO');
+  await addTaskToProjectByName('827586928115990', 'CONTACTS - NO');
+  await addTaskToProjectByName('827586925760914', 'CONTACTS - NO');
+  await addTaskToProjectByName('827586922545353', 'CONTACTS - NO');
+  await addTaskToProjectByName('827585239615427', 'CONTACTS - NO');
+  await addTaskToProjectByName('827585197679427', 'CONTACTS - NO');
+  await addTaskToProjectByName('827585193238380', 'CONTACTS - NO');
+  await addTaskToProjectByName('827585193525334', 'CONTACTS - NO');
+  await addTaskToProjectByName('827581927167840', 'CONTACTS - NO');
+  await addTaskToProjectByName('827585219889943', 'CONTACTS - NO');
+  await addTaskToProjectByName('827583567814915', 'CONTACTS - NO');
+  await addTaskToProjectByName('827583621685864', 'CONTACTS - NO');
+  await addTaskToProjectByName('827577372881752', 'CONTACTS - NO');
+  await addTaskToProjectByName('827585180061480', 'CONTACTS - NO');
+  await addTaskToProjectByName('827585197393550', 'CONTACTS - NO');
+  await addTaskToProjectByName('827581918263571', 'CONTACTS - NO');
+  await addTaskToProjectByName('827585187783452', 'CONTACTS - NO');
+  await addTaskToProjectByName('827583566044026', 'CONTACTS - NO');
+  await addTaskToProjectByName('827585178043435', 'CONTACTS - NO');
+  await addTaskToProjectByName('827585179616578', 'CONTACTS - NO');
+  await addTaskToProjectByName('827585177275680', 'CONTACTS - NO');
+  await addTaskToProjectByName('827583608623749', 'CONTACTS - NO');
+  await addTaskToProjectByName('827583624246841', 'CONTACTS - NO');
+  await addTaskToProjectByName('827583620870449', 'CONTACTS - NO');
+  await addTaskToProjectByName('827583617833042', 'CONTACTS - NO');
+  await addTaskToProjectByName('827583573501063', 'CONTACTS - NO');
+  await addTaskToProjectByName('827583609235606', 'CONTACTS - NO');
+  await addTaskToProjectByName('827583574446350', 'CONTACTS - NO');
+  await addTaskToProjectByName('827580861770625', 'CONTACTS - NO');
+  await addTaskToProjectByName('827583597334968', 'CONTACTS - NO');
+  await addTaskToProjectByName('827583595299676', 'CONTACTS - NO');
+  await addTaskToProjectByName('827583583032848', 'CONTACTS - NO');
+  await addTaskToProjectByName('827583583188660', 'CONTACTS - NO');
+  await addTaskToProjectByName('827580846911888', 'CONTACTS - NO');
+  await addTaskToProjectByName('827583576031781', 'CONTACTS - NO');
+  await addTaskToProjectByName('827583573224470', 'CONTACTS - NO');
+  await addTaskToProjectByName('827583569861710', 'CONTACTS - NO');
+  await addTaskToProjectByName('827581941820989', 'CONTACTS - NO');
+  await addTaskToProjectByName('827580861770613', 'CONTACTS - NO');
+  await addTaskToProjectByName('827583558942076', 'CONTACTS - NO');
+  await addTaskToProjectByName('827581903735966', 'CONTACTS - NO');
+  await addTaskToProjectByName('827581916390376', 'CONTACTS - NO');
+  await addTaskToProjectByName('827581898239572', 'CONTACTS - NO');
+  await addTaskToProjectByName('827581880313726', 'CONTACTS - NO');
+  await addTaskToProjectByName('827578767793221', 'CONTACTS - NO');
+  await addTaskToProjectByName('827581888291810', 'CONTACTS - NO');
+  await addTaskToProjectByName('827581883350599', 'CONTACTS - NO');
+  await addTaskToProjectByName('827581905729400', 'CONTACTS - NO');
+  await addTaskToProjectByName('827580850466949', 'CONTACTS - NO');
+  await addTaskToProjectByName('827580844149415', 'CONTACTS - NO');
+  await addTaskToProjectByName('827581898245842', 'CONTACTS - NO');
+  await addTaskToProjectByName('827581893236374', 'CONTACTS - NO');
+  await addTaskToProjectByName('827577422733274', 'CONTACTS - NO');
+  await addTaskToProjectByName('827580856907855', 'CONTACTS - NO');
+  await addTaskToProjectByName('827581884322986', 'CONTACTS - NO');
+  await addTaskToProjectByName('827578740905891', 'CONTACTS - NO');
+  await addTaskToProjectByName('827581878711545', 'CONTACTS - NO');
+  await addTaskToProjectByName('827573396928575', 'CONTACTS - NO');
+  await addTaskToProjectByName('827580846452750', 'CONTACTS - NO');
+  await addTaskToProjectByName('827580861604330', 'CONTACTS - NO');
+  await addTaskToProjectByName('827580836391037', 'CONTACTS - NO');
+  await addTaskToProjectByName('827580802802928', 'CONTACTS - NO');
+  await addTaskToProjectByName('827578778049366', 'CONTACTS - NO');
+  await addTaskToProjectByName('827580842367714', 'CONTACTS - NO');
+  await addTaskToProjectByName('827580838999298', 'CONTACTS - NO');
+  await addTaskToProjectByName('827578773100937', 'CONTACTS - NO');
+  await addTaskToProjectByName('827580829666010', 'CONTACTS - NO');
+  await addTaskToProjectByName('827580827110210', 'CONTACTS - NO');
+  await addTaskToProjectByName('827578780911797', 'CONTACTS - NO');
+  await addTaskToProjectByName('827577427960976', 'CONTACTS - NO');
+  await addTaskToProjectByName('827580817868691', 'CONTACTS - NO');
+  await addTaskToProjectByName('827580815584508', 'CONTACTS - NO');
+  await addTaskToProjectByName('827578766184625', 'CONTACTS - NO');
+  await addTaskToProjectByName('827577378096628', 'CONTACTS - NO');
+  await addTaskToProjectByName('827574496253078', 'CONTACTS - NO');
+  await addTaskToProjectByName('827578771417028', 'CONTACTS - NO');
+  await addTaskToProjectByName('827578742789927', 'CONTACTS - NO');
+  await addTaskToProjectByName('827568247189327', 'CONTACTS - NO');
+  await addTaskToProjectByName('827575574141203', 'CONTACTS - NO');
+  await addTaskToProjectByName('827574546534809', 'CONTACTS - NO');
+  await addTaskToProjectByName('827578756899941', 'CONTACTS - NO');
+  await addTaskToProjectByName('827578732389527', 'CONTACTS - NO');
+  await addTaskToProjectByName('827578746195665', 'CONTACTS - NO');
+  await addTaskToProjectByName('827578737154545', 'CONTACTS - NO');
+  await addTaskToProjectByName('827578741714420', 'CONTACTS - NO');
+  await addTaskToProjectByName('827578720215017', 'CONTACTS - NO');
+  await addTaskToProjectByName('827578730224342', 'CONTACTS - NO');
+  await addTaskToProjectByName('827578727375818', 'CONTACTS - NO');
+  await addTaskToProjectByName('827577435786786', 'CONTACTS - NO');
+  await addTaskToProjectByName('827577439159495', 'CONTACTS - NO');
+  await addTaskToProjectByName('827577380868391', 'CONTACTS - NO');
 });
 
-function addTagToTaskByName(taskId, TaskName, tagName) {
-  const query = TaskName;
-  return updateOrCreateTag(query, {
-    workspace: keys.distanskraftSe,
-    name: tagName
-  })
-    .then(results => {
-      return api.tasks
-        .update(taskId, { tags: results.id })
-        .then(response => {
-          return response;
-        })
-        .catch(err => err);
+function addTagToTaskByName(taskId, tagName) {
+  const query = tagName;
+  const taskID = taskId;
 
-      return results;
+  helper
+    .updateOrCreateTag(query, {
+      workspace: keys.qvaliaCom,
+      name: tagName
+    })
+    .then(results => {
+      client.tasks
+        .addTag(taskID, { tag: results.id })
+        .then(resp => {
+          return resp;
+        })
+        .catch(err => {
+          return err;
+        });
     })
     .catch(err => {
       return err.value.errors;
@@ -322,6 +425,7 @@ router.post('/task/updateAccountName', (req, res) => {
         {
           console.log('Working on id: ', arrTaskIds[i]);
 
+          getSubTaskIds(arrTaskIds[i])
           getSubTaskIds(arrTaskIds[i])
             .then(result => {
               arrTemp.push(result);
@@ -602,10 +706,13 @@ router.post('/task/addtasktoprojectbyname', async (req, res) => {
 });
 
 async function addTaskToProjectByName(taskId, projectName) {
+  console.log('Working on task: ', taskId);
+  console.log('Adding task to project: ', projectName);
   // Retrieve all projects.
   return client.projects
-    .findAll({ workspace: 542024449570027 })
+    .findAll({ workspace: keys.qvaliaCom })
     .then(function(response) {
+      console.log(response);
       //console.log(response);
       response.data.forEach(project => {
         if (project.name === projectName) {
@@ -616,14 +723,35 @@ async function addTaskToProjectByName(taskId, projectName) {
           client.tasks
             .addProject(taskid, to)
             .then(response => {
+              console.log(response);
               return response;
             })
             .catch(err => {
+              console.log(err);
               return err;
             });
         }
       });
       //response.data.name.forEach(name => console.log(response.data.name));
+    });
+}
+
+async function addTaskToProjectById(taskId, projectId) {
+  console.log('Working on task: ', taskId);
+  console.log('Adding task to project: ', projectId);
+  // Retrieve all projects.
+  console.log('Found project, has id: ' + projectId);
+  let to = { project: projectId };
+  let taskid = taskId;
+  client.tasks
+    .addProject(taskid, to)
+    .then(response => {
+      console.log(response);
+      return response;
+    })
+    .catch(err => {
+      console.log(err);
+      return err;
     });
 }
 
@@ -637,7 +765,7 @@ router.post('/task/addtagtotaskbyname', (req, res) => {
 
   helper
     .updateOrCreateTag(query, {
-      workspace: keys.qvaliaCom,
+      workspace: keys.distanskraftSe,
       name: req.body.name,
       color: req.body.color,
       notes: req.body.notes || ''
