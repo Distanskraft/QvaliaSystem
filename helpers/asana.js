@@ -255,7 +255,7 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                 if (_event.type == 'story') {
                   console.log('made it to MASTER case - STORY');
                   // Check for story text
-                  if (data.text.match(/SYSTEM COMMAND to "Action here"/i)) {
+                  if (data.text.match(/SYSTEM COMMAND to "Action here-XXX"/i)) {
                     console.log('ACTION HERE FOUND!');
                     console.log(data.target.id);
                     updateCustomFieldByName(
