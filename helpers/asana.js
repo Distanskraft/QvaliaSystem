@@ -277,16 +277,22 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                     let EIV = EIV_JSON[0].number_value;
                     console.log('estimated_invoice_value: ' + EIV);
 
-                    // Pull the custom field info for "Verification Currency" (ENUM)
+                    // Pull the custom field ID info for "Verification Currency"
                     let EIV_curr_JSON = data.target.custom_fields.filter(
                       response => {
                         return response.name === 'Verification Currency';
                       }
                     );
-                    let EIV_curr = EIV_curr_JSON[0].enum_value;
-                    console.log(
-                      'estimated_invoice_value currency: ' + EIV_curr
+                    let EIV_curr_id = EIV_curr_JSON[0].id;
+                    console.log('EIV_curr_id: ' + EIV_curr_id);
+
+                    let EIV_curr_JSON2 = data.target.custom_fields.enum_options.id.filter(
+                      response => {
+                        return response.name === EIV_curr_id;
+                      }
                     );
+                    let EIV_curr = EIV_curr_JSON2[0].name;
+                    console.log('EIV_curr: ' + EIV_curr);
 
                     let logString;
                     logString = JSON.stringify(data);
