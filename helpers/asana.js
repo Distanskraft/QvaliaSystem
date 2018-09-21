@@ -267,9 +267,22 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                     console.log(
                       'MASTER CASE - STORY - ESTIMATED INVOICE VALUE'
                     );
-                    console.log('DATA.TARGET.ID: ' + data.target.id);
 
-                    console.log('DATA.TARGET: ' + data.target);
+                    let estimated_invoice_value_CF_JSON = data.target.custom_fields.filter(
+                      response => {
+                        return response.name === 'Estimated Invoice Value';
+                      }
+                    );
+                    console.log(
+                      'estimated_invoice_value_CF_JSON: ' +
+                        estimated_invoice_value_CF_JSON
+                    );
+
+                    let estimated_invoice_value =
+                      estimated_invoice_value_CF_JSON[0].number_value;
+                    console.log(
+                      'estimated_invoice_value: ' + estimated_invoice_value
+                    );
 
                     let logString;
                     logString = JSON.stringify(data);
