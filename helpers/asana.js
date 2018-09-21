@@ -268,8 +268,13 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                       'MASTER CASE - STORY - ESTIMATED INVOICE VALUE'
                     );
                     console.log('DATA.TARGET.ID: ' + data.target.id);
+
                     console.log('DATA.TARGET: ' + data.target);
-                    console.log('DATA: ' + data);
+
+                    let logString;
+                    logString = JSON.stringify(data);
+                    logString = JSON.stringify(data, null, 4); // (Optional) beautiful indented output.
+                    console.log('LOGSTRING: ' + logString); // Logs output to dev tools console.
                   }
 
                   // Estimated Invoice Value ;
