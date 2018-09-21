@@ -17,8 +17,6 @@ const client = asana.Client.create().useAccessToken(keys.distanskraftToken);
 
 /* #endregion INIT */
 
-/* #region LAUNCED_FUNCTIONS */
-
 // UPDATE CUSTOM FIELD BY NAME FUNCTION
 async function updateCustomFieldByName(taskId, cfName, cfValue) {
   /* Add the below into the router.post section: 
@@ -194,6 +192,7 @@ function onServiceTaskCreation(projectId, data) {
   );
 }
 
+/* #region COMMENTS1 */
 /*
 //Function to check if the subscription exists at asana
 module.exports.checkAsanaForWebhook = (workspaceId, asanaProjectId) => {
@@ -232,6 +231,8 @@ module.exports.checkAsanaForWebhook = (workspaceId, asanaProjectId) => {
 };
 */
 
+/* #endregion COMMENTS1 */
+
 function subscribeToAsanaWebhooks(eventList, resourceId) {
   console.log(eventList, resourceId);
   return eventList.reduce((promise, _event) => {
@@ -247,7 +248,7 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
             opt_expand: 'target'
           })
           .then(data => {
-            console.log('DATA: ', data);
+            //console.log('DATA: ', data);
             // This part will be used to call the Catch Hooks On Zapier
             switch (pType.toUpperCase()) {
               case 'MASTER':
@@ -255,7 +256,7 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                   console.log('made it to MASTER case - STORY');
                   // Check for story text
                   if (data.text.match(/SYSTEM COMMAND to "Action here"/i)) {
-                    console.log('yes');
+                    console.log('ACTION HERE FOUND!');
                     console.log(data.target.id);
                     updateCustomFieldByName(
                       data.target.id,
