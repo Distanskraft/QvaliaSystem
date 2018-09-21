@@ -286,7 +286,7 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                     let EIV_curr_id = EIV_curr_JSON[0].id;
                     console.log('EIV_curr_id: ' + EIV_curr_id);
 
-                    let EIV_curr_JSON2 = data.target.custom_fields.enum_options.id.filter(
+                    let EIV_curr_JSON2 = data.target.custom_fields.data.id.filter(
                       response => {
                         return response.name === EIV_curr_id;
                       }
