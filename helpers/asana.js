@@ -262,7 +262,39 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                       'Account Name',
                       'Snigel'
                     );
+                  } else if (data.text.match(/Estimated Invoice Value/i)) {
+                    console.log('Estimated Invoice Value Changed');
+                    console.log(data.target.id);
+
+                    //  Ta task ID och dra datat från tasken
+                    // Gå igenom custom fieldsen i tasken och bryt ut CURRENCY och ESTIMATED INVOICE VALUE
+                    // Räkna ut vilken valuta det är (IF-statement) och sätt valutakursen
+                    // Uppdatera ESTIMATED INVOICE VALUE SEK.
+
+                    let estimated_invoice_value_CF_JSON = data.target.custom_fields.filter(
+                      response => {
+                        return response.name === 'Estimated Invoice Value';
+                      }
+                    );
+                    console.log(
+                      'estimated_invoice_value_CF_JSON: ' +
+                        estimated_invoice_value_CF_JSON
+                    );
+
+                    let estimated_invoice_value =
+                      estimated_invoice_value_CF_JSON[0].number_value;
+                    console.log(
+                      'estimated_invoice_value: ' + estimated_invoice_value
+                    );
+
+                    updateCustomFieldByName(
+                      data.target.id,
+                      'Estimated Invoice Value SEK',
+                      estimated_invoice_value * 10.5
+                    );
                   }
+
+                  // Estimated Invoice Value ;
                 } else if (_event.type == 'task') {
                   console.log('made it to MASTER case - TASK');
                   // Check for story text
