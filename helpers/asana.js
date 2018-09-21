@@ -290,6 +290,9 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                   }
 
                   if (data.text.match(/Estimated Invoice Value/i)) {
+                    console.log(
+                      'MASTER CASE - TASK - ESTIMATED INVOICE VALUE CHANGED'
+                    );
                     console.log('Estimated Invoice Value Changed');
                     console.log('data.target.id: ' + data.target.id);
                     console.log('data.target ' + data.target);
