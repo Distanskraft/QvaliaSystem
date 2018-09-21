@@ -272,6 +272,8 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                   // Estimated Invoice Value ;
                 } else if (_event.type == 'task') {
                   console.log('MASTER CASE - TASK');
+                  console.log('DATA.TEXT: ' + data.text);
+                  console.log('DATA: ' + data);
                   // Check for story text
                   // console.log(_event);
                   if (data.text.match(/SYSTEM COMMAND to "Action here"/i)) {
@@ -286,7 +288,7 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                     );
                     */
                   }
-                  console.log('DATA.TEXT: ' + data.text);
+
                   if (data.text.match(/Estimated Invoice Value/i)) {
                     console.log('Estimated Invoice Value Changed');
                     console.log('data.target.id: ' + data.target.id);
