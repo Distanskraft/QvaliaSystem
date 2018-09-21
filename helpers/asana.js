@@ -293,9 +293,10 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                     console.log(
                       'MASTER CASE - TASK - ESTIMATED INVOICE VALUE CHANGED'
                     );
-                    console.log('Estimated Invoice Value Changed');
-                    console.log('data.target.id: ' + data.target.id);
-                    console.log('data.target ' + data.target);
+                    console.log('ESTIMATED INVOICE VALUE CHANGED!');
+                    console.log('DATA.TARGET.ID: ' + data.target.id);
+                    console.log('DATA.TARGET: ' + data.target);
+                    console.log('DATA: ' + data);
                     //  Ta task ID och dra datat från tasken
                     // Gå igenom custom fieldsen i tasken och bryt ut CURRENCY och ESTIMATED INVOICE VALUE
                     // Räkna ut vilken valuta det är (IF-statement) och sätt valutakursen
