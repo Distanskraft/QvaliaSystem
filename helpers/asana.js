@@ -265,8 +265,8 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                     );
                   } else if (data.text.match(/Estimated Invoice Value/i)) {
                     console.log('Estimated Invoice Value Changed');
-                    console.log(data.target.id);
-
+                    console.log('data.target.id: ' + data.target.id);
+                    console.log('data.target ' + data.target);
                     //  Ta task ID och dra datat från tasken
                     // Gå igenom custom fieldsen i tasken och bryt ut CURRENCY och ESTIMATED INVOICE VALUE
                     // Räkna ut vilken valuta det är (IF-statement) och sätt valutakursen
