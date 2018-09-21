@@ -267,21 +267,30 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                     console.log(
                       'MASTER CASE - STORY - ESTIMATED INVOICE VALUE'
                     );
-
+                    // Pull the custom field info for "Estimated Invoice Value" as JSON
                     let estimated_invoice_value_CF_JSON = data.target.custom_fields.filter(
                       response => {
                         return response.name === 'Estimated Invoice Value';
                       }
                     );
-                    console.log(
-                      'estimated_invoice_value_CF_JSON: ' +
-                        estimated_invoice_value_CF_JSON
-                    );
-
+                    // Set the value for the estimated invoice value variable
                     let estimated_invoice_value =
                       estimated_invoice_value_CF_JSON[0].number_value;
                     console.log(
                       'estimated_invoice_value: ' + estimated_invoice_value
+                    );
+
+                    // Pull the custom field info for "Verification Currency" (ENUM)
+                    let estimated_invoice_value_CF_Currency_JSON = data.target.custom_fields.filter(
+                      response => {
+                        return response.name === 'Verification Currency';
+                      }
+                    );
+                    let estimated_invoice_value_currency =
+                      estimated_invoice_value_CF_Currency_JSON[0].number_value;
+                    console.log(
+                      'estimated_invoice_value: ' +
+                        estimated_invoice_value_currency
                     );
 
                     let logString;
