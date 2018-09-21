@@ -253,7 +253,7 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
             switch (pType.toUpperCase()) {
               case 'MASTER':
                 if (_event.type == 'story') {
-                  console.log('made it to MASTER case - STORY');
+                  console.log('MASTER CASE - STORY');
                   // Check for story text
                   if (data.text.match(/SYSTEM COMMAND to "Action here-XXX"/i)) {
                     console.log('ACTION HERE FOUND!');
@@ -271,17 +271,20 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
 
                   // Estimated Invoice Value ;
                 } else if (_event.type == 'task') {
-                  console.log('made it to MASTER case - TASK');
+                  console.log('MASTER CASE - TASK');
                   // Check for story text
-                  console.log(_event);
+                  // console.log(_event);
                   if (data.text.match(/SYSTEM COMMAND to "Action here"/i)) {
-                    console.log('yes');
-                    console.log('DATA: ', data);
+                    console.log('MASTER CASE - TASK - SYSTEM COMMAND');
+                    //console.log('yes');
+                    //console.log('DATA: ', data);
+                    /*
                     updateCustomFieldByName(
                       data.target.id,
                       'Account Name',
                       'Snigel'
                     );
+                    */
                   }
                   if (data.text.match(/Estimated Invoice Value/i)) {
                     console.log('Estimated Invoice Value Changed');
