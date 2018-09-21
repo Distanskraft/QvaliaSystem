@@ -269,7 +269,7 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                     );
                     console.log('DATA.TARGET.ID: ' + data.target.id);
                     console.log('DATA.TARGET: ' + data.target);
-                    console.log('DATA.CUSTOMFIELDS: ' + data.custom_fields);
+                    console.log('DATA: ' + data);
                   }
 
                   // Estimated Invoice Value ;
