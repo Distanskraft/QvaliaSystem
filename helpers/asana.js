@@ -267,15 +267,15 @@ function subscribeToAsanaWebhooks(eventList, resourceId) {
                     console.log(
                       'MASTER CASE - STORY - ESTIMATED INVOICE VALUE'
                     );
+                    console.log('DATA.TARGET.ID: ' + data.target.id);
+                    console.log('DATA.TARGET: ' + data.target);
+                    console.log('DATA.CUSTOMFIELDS: ' + data.custom_fields);
                   }
 
                   // Estimated Invoice Value ;
                 } else if (_event.type == 'task') {
                   console.log('MASTER CASE - TASK');
                   console.log('DATA.TEXT: ' + data.text);
-                  //console.log('DATA2: ' + data);
-                  // Check for story text
-                  // console.log(_event);
                   if (data.text.match(/SYSTEM COMMAND to "Action here"/i)) {
                     console.log('MASTER CASE - TASK - SYSTEM COMMAND');
                     //console.log('yes');
