@@ -11,11 +11,11 @@
   "author": "Qvalia Systems",
   "license": "ISC",
   "dependencies": {
-    "asana": "^0.15.1",
+    "asana": "^0.17.3",
     "body-parser": "^1.18.3",
     "email-verifier": "^0.4.0",
     "express": "^4.16.3",
-    "mongoose": "^5.2.9",
+    "mongoose": "^5.7.7",
     "pluralize": "^7.0.0",
     "request": "^2.88.0",
     "router-express": "^1.5.2"
